@@ -18,6 +18,11 @@ Router.map(function () {
     template: 'diagnosis'
   });
 
+  this.route('admin/questions/add', {
+    path: '/admin/questions/add',
+    template: 'addQuestion'
+  });
+
   // /**
   //  * The route's name is "posts"
   //  * The route's path is "/posts"
