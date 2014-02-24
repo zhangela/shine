@@ -51,7 +51,7 @@ FormUtils = {
         });
 
         // parse numbers if input fields of type number are encountered
-        if (el.name.type === "number") {
+        if (el.type === "number") {
           el.value = parseFloat(el.value, 10);
           if (isNaN(el.value)) {
             el.value = 0;
@@ -63,21 +63,27 @@ FormUtils = {
           return name[name.length - 1] === "]" && name.indexOf("[") !== -1;
         };
 
-        // this code works with name[0] or name[], it just gets rid of
-        // everything in brackets
-        if (isListAttribute(attrName)) {
-          openBracketIndex = attrName.indexOf("[");
-          attrName = attrName.slice(0, openBracketIndex);
+        var isRadioOrCheckbox = function (el) {
+          return el.type === "radio" || el.type === "checkbox";
+        };
 
-          // if the array exists, push the value, if not create an array
-          if (node[attrName]) {
-            node[attrName].push(el.value);
+        if (!isRadioOrCheckbox(el) || el.checked) {
+          // this code works with name[0] or name[], it just gets rid of
+          // everything in brackets
+          if (isListAttribute(attrName)) {
+            openBracketIndex = attrName.indexOf("[");
+            attrName = attrName.slice(0, openBracketIndex);
+
+            // if the array exists, push the value, if not create an array
+            if (node[attrName]) {
+              node[attrName].push(el.value);
+            } else {
+              node[attrName] = [el.value];
+            }
           } else {
-            node[attrName] = [el.value];
+            // if the attribute isn't an array, just set the value
+            node[attrName] = el.value;
           }
-        } else {
-          // if the attribute isn't an array, just set the value
-          node[attrName] = el.value;
         }
       }
     });
