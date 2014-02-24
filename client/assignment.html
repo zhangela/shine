@@ -1,4 +1,5 @@
 <template name="assignment">
+  {{completedByCurrentUser}}
   <h2>Welcome to the {{this.displayedName}}!</h2>
   <span class="hidden assignmentID">{{this._id}}</span>
   {{#each this.questions}}

@@ -1,17 +1,18 @@
 Meteor.methods({
   "updateCompletedAssignmentsForUser": function(assignmentID, correctAnswers) {
-    var assignmentName = Assignments.findOne(assignmentID).name;
+    var assignment = Assignments.findOne(assignmentID);
     var assignmentResult = {};
-    assignmentResult[assignmentName] = {
+    assignmentResult[assignment.name] = {
         assignmentID: assignmentID,
+        numCorrect: correctAnswers.length,
+        numTotal: assignment.questions.length,
         correctAnswers: correctAnswers
       };
-      
-    console.log(assignmentResult);
+
     Meteor.users.update(
       {_id: this.userId},
       {
-        $push: {scores: assignmentResult}
+        $push: {completed: assignmentResult}
       }
     );
   }
@@ -19,7 +20,7 @@ Meteor.methods({
 
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
-        {fields: {'scores': 1}});
+        {fields: {'completed': 1}});
 });
 
 Meteor.startup(function () {
