@@ -13,9 +13,12 @@ Router.map(function () {
     template: 'home'
   });
 
-  this.route('diagnosis', {
-    path: '/diagnosis',
-    template: 'diagnosis'
+  this.route('assignment', {
+    path: 'assignment/:name',
+    template: 'assignment',
+    data: function() {
+      return Assignments.findOne({name: this.params.name});
+    }
   });
 
   this.route('admin/questions/add', {
