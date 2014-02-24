@@ -13,8 +13,8 @@ Router.map(function () {
     template: 'home'
   });
 
-  this.route('assignment', {
-    path: 'assignment/:name',
+  this.route('assignments', {
+    path: 'assignments/:name',
     template: 'assignment',
     data: function() {
       return Assignments.findOne({name: this.params.name});
