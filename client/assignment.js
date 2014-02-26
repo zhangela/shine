@@ -35,8 +35,21 @@ Template.assignment.helpers({
     return Questions.findOne({_id: this.valueOf()});
   },
   "completedByCurrentUser": function() {
-    console.log(Meteor.user()); //undefined
-    console.log(this.name);
-    return _.contains(Meteor.user(), this.name);
+    if (Meteor.user()) {
+      var completedAssignments = _.map(Meteor.user().completed, function(test) {
+        return test.name;
+      });
+      return _.contains(completedAssignments, this.name);
+    }
+  },
+  "currentAssignmentScore": function(assignmentName) {
+    if (Meteor.user()) {
+      console.log(Meteor.user().completed);
+
+      var testResult = _.find(Meteor.user().completed, function(test) {
+        return test.name === assignmentName;
+      });
+      return testResult.result.numCorrect / testResult.result.numTotal * 100;
+    }
   }
 });

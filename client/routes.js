@@ -26,6 +26,11 @@ Router.map(function () {
     template: 'addQuestion'
   });
 
+  this.route('admin/users/manage', {
+    path: 'admin/users/manage',
+    template: 'manageUsers'
+  });
+
   // /**
   //  * The route's name is "posts"
   //  * The route's path is "/posts"
