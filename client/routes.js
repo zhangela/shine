@@ -14,10 +14,14 @@ Router.map(function () {
   });
 
   this.route('assignments', {
-    path: 'assignments/:name',
+    path: 'assignments/:nameOrWeek/:assignmentType?',
     template: 'assignment',
     data: function() {
-      return Assignments.findOne({name: this.params.name});
+      if (! this.params.assignmentType) {
+        return Assignments.findOne({name: this.params.nameOrWeek});
+      } else {
+        return Assignments.findOne({name: this.params.nameOrWeek + this.params.assignmentType});
+      }
     }
   });
 
