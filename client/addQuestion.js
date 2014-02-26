@@ -6,7 +6,7 @@ Template.addQuestion.events({
     var formObj = template.find("form");
     var formJson = FormUtils.serializeForm(formObj);
     var questionID = Questions.insert(formJson);
-    var assignmentID = formJson.answerAssignment;
+    var assignmentID = formJson.questionAssignment;
     Assignments.update({_id: assignmentID}, {$push: {questions: questionID}});
     formObj.reset();
   }

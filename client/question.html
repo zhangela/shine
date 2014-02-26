@@ -3,32 +3,37 @@
     <div class="form-group">
       <label for="questionText">{{questionText}}</label>
       <input type="hidden" name="questionID" value="{{_id}}">
-      <div class="indent-small">
-        <div class="radio">
-          <label>
-            <input type="radio" name="answerOption" id="answerOptionA" value="answerOptionA">
-            {{answerOptionA}}
-          </label>
+
+      {{#if isMultipleChoice this}}
+        <div class="indent-small">
+          <div class="radio">
+            <label>
+              <input type="radio" name="answerOption" id="answerOptionA" value="answerOptionA">
+              {{answerOptionA}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="answerOption" id="answerOptionB" value="answerOptionB">
+              {{answerOptionB}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="answerOption" id="answerOptionC" value="answerOptionC">
+              {{answerOptionC}}
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="answerOption" id="answerOptionD" value="answerOptionD">
+              {{answerOptionD}}
+            </label>
+          </div>
         </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="answerOption" id="answerOptionB" value="answerOptionB">
-            {{answerOptionB}}
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="answerOption" id="answerOptionC" value="answerOptionC">
-            {{answerOptionC}}
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="answerOption" id="answerOptionD" value="answerOptionD">
-            {{answerOptionD}}
-          </label>
-        </div>
-      </div>
+      {{else}}
+        <input type="text" class="form-control" name="answerText" placeholder="Your Answer"/>
+      {{/if}}
     </div>
   </form>
 </template>

@@ -5,7 +5,7 @@
     <div class="form-group">
       <label for="questionAssignment" class="col-sm-2 control-label">Assignment</label>
       <div class="col-sm-10">
-        <select name="answerAssignment" class="form-control">
+        <select name="questionAssignment" class="form-control">
           {{#each assignments}}
             <option value="{{_id}}">{{displayedName}}</option>
           {{/each}}
@@ -16,9 +16,9 @@
     <div class="form-group">
       <label for="questionType" class="col-sm-2 control-label">Question Type</label>
       <div class="col-sm-10">
-        <select name="answerType" class="form-control">
+        <select name="questionType" class="form-control">
           <option>Multiple Choice</option>
-          <option>Number Input</option>
+          <option>Numeric Input</option>
         </select>
       </div>
     </div>
@@ -29,6 +29,17 @@
         <input type="questionText" class="form-control" name="questionText" placeholder="Question Text">
       </div>
     </div>
+
+    <h4>If Question Is Numeric Input: </h4>
+
+    <div class="form-group">
+      <label for="answerCorrectNumeric" class="col-sm-2 control-label">Correct Answer</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="answerCorrectNumeric" placeholder="Correct Answer (Number)">
+      </div>
+    </div>
+
+    <h4>If Question Is Multiple Choice: </h4>
 
     <div class="form-group">
       <label for="questionOptionA" class="col-sm-2 control-label">Option A</label>
