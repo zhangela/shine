@@ -14,7 +14,7 @@ Router.map(function () {
   });
 
   this.route('assignments', {
-    path: 'assignments/weeks/:week/:type/questions/add',
+    path: '/weeks/:week/:type/questions/add',
     template: 'assignment',
     data: function() {
       return Assignments.findOne({week: this.params.week, type: this.params.type});
@@ -22,7 +22,7 @@ Router.map(function () {
   });
 
   this.route('addQuestion', {
-    path: 'admin/assignments/weeks/:week/:type/questions/add',
+    path: 'admin/weeks/:week/:type/questions/add',
     template: 'addQuestion',
     data: function() {
       return Assignments.findOne({week: this.params.week, type: this.params.type});
@@ -30,7 +30,7 @@ Router.map(function () {
   });
 
   this.route('addAssignment', {
-    path: 'admin/assignments/add',
+    path: 'admin/assignments',
     template: 'addAssignment',
     before: function () {
       if (!Meteor.user()) {

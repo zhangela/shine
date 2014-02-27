@@ -4,8 +4,11 @@
 </head>
 
 <body>
+
   {{> menu}}
-  {{> layout}}
+  {{#unless loggingIn}}
+    {{> layout}}
+  {{/unless}}
 </body>
 
 <template name="layout">
