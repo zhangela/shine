@@ -30,60 +30,78 @@
       </div>
     </div>
 
-    <h4>If Question Is Numeric Input: </h4>
-
-    <div class="form-group">
-      <label for="answerCorrectNumeric" class="col-sm-2 control-label">Correct Answer</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" name="answerCorrectNumeric" placeholder="Correct Answer (Number)">
-      </div>
-    </div>
-
-    <h4>If Question Is Multiple Choice: </h4>
-
-    <div class="form-group">
-      <label for="questionOptionA" class="col-sm-2 control-label">Option A</label>
-      <div class="col-sm-10">
-        <input type="answerOptionA" class="form-control" name="answerOptionA" placeholder="Option A Text">
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="questionOptionB" class="col-sm-2 control-label">Option B</label>
-      <div class="col-sm-10">
-        <input type="answerOptionB" class="form-control" name="answerOptionB" placeholder="Option B Text">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="questionOptionC" class="col-sm-2 control-label">Option C</label>
-      <div class="col-sm-10">
-        <input type="answerOptionC" class="form-control" name="answerOptionC" placeholder="Option C Text">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="questionOptionD" class="col-sm-2 control-label">Option D</label>
-      <div class="col-sm-10">
-        <input type="answerOptionD" class="form-control" name="answerOptionD" placeholder="Option D Text">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="questionCorrectOption" class="col-sm-2 control-label">Correct Answer</label>
-      <div class="col-sm-10">
-        <select name="answerCorrectOption" class="form-control">
-          <option value="answerOptionA">A</option>
-          <option value="answerOptionB">B</option>
-          <option value="answerOptionC">C</option>
-          <option value="answerOptionD">D</option>
-        </select>
-      </div>
-    </div>
-
+    {{#isolate }}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Create Question</button>
+        <div>
+          <button class="uploadBtn btn btn-default">Upload Image</button>
+        </div>
+        {{#if uploadedImage}}
+          <div>
+            <br>
+            <img src="{{uploadedImage}}" width="50%"/>
+          </div>
+          <input type="hidden" name="uploadedImage" value="{{uploadedImage}}"/>
+        {{/if}}
+      </div>
+    </div>
+    {{/isolate}}
+
+    {{#isolate }}
+    {{#unless isMultipleChoice}}
+      <div class="form-group">
+        <label for="answerCorrectNumeric" class="col-sm-2 control-label">Correct Answer</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="answerCorrectNumeric" placeholder="Correct Answer (Number)">
+        </div>
+      </div>
+
+    {{else}}
+
+      <div class="form-group">
+        <label for="questionOptionA" class="col-sm-2 control-label">Option A</label>
+        <div class="col-sm-10">
+          <input type="answerOptionA" class="form-control" name="answerOptionA" placeholder="Option A Text">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="questionOptionB" class="col-sm-2 control-label">Option B</label>
+        <div class="col-sm-10">
+          <input type="answerOptionB" class="form-control" name="answerOptionB" placeholder="Option B Text">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="questionOptionC" class="col-sm-2 control-label">Option C</label>
+        <div class="col-sm-10">
+          <input type="answerOptionC" class="form-control" name="answerOptionC" placeholder="Option C Text">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="questionOptionD" class="col-sm-2 control-label">Option D</label>
+        <div class="col-sm-10">
+          <input type="answerOptionD" class="form-control" name="answerOptionD" placeholder="Option D Text">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="questionCorrectOption" class="col-sm-2 control-label">Correct Answer</label>
+        <div class="col-sm-10">
+          <select name="answerCorrectOption" class="form-control">
+            <option value="answerOptionA">A</option>
+            <option value="answerOptionB">B</option>
+            <option value="answerOptionC">C</option>
+            <option value="answerOptionD">D</option>
+          </select>
+        </div>
+      </div>
+    {{/unless}}
+    {{/isolate}}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="submitBtn btn btn-default">Create Question</button>
       </div>
     </div>
   </form>

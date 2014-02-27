@@ -14,6 +14,10 @@ Handlebars.registerHelper("assignmentResult", function(user, assignmentName) {
       }
 });
 
+$(function() {
+  filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");
+});
+
 Meteor.subscribe("userData");
 
 Meteor.subscribe("allUsersData");

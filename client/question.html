@@ -2,6 +2,12 @@
   <form role="form">
     <div class="form-group">
       <label for="questionText">{{questionText}}</label>
+      {{#if uploadedImage}}
+        <div>
+          <img src="{{uploadedImage}}" width="30%" />
+        </div>
+        <br>
+      {{/if}}
       <input type="hidden" name="questionID" value="{{_id}}">
 
       {{#if isMultipleChoice this}}
