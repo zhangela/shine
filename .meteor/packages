@@ -10,9 +10,9 @@ preserve-inputs
 http
 accounts-base
 
-accounts-ui-bootstrap-3
 
 bootstrap-3
 accounts-password
 
 iron-router
+accounts-ui

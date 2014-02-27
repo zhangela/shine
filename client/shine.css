@@ -2,3 +2,21 @@
 .indent-small {
   margin-left: 20px;
 }
+
+#login-dropdown-list {
+  width: 250px;
+}
+
+.accounts-dialog input {
+  width: 70%;
+}
+
+#login-password-label-and-input,
+#login-email-label-and-input {
+  text-align: left;
+}
+
+#login-password,
+#login-email{
+  float: right;
+}
