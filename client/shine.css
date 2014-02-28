@@ -20,3 +20,8 @@
 #login-email{
   float: right;
 }
+
+.login-link-text {
+  margin-top: auto;
+  margin-bottom: auto;
+}
