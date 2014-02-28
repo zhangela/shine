@@ -23,7 +23,6 @@ Template.assignment.events({
           correctAnswers.push(answer.questionID);
         }
       }
-
     });
 
     var assignmentID = $(template.find(".assignmentID")).text();
@@ -60,47 +59,8 @@ Template.assignment.helpers({
     }
   },
   "toProperCase": function(assignmentType) {
-    console.log(assignmentType.toProperCase());
-    return assignmentType.toProperCase();
-  }
-});
-
-
-Template.addAssignment.events({
-  "submit form": function(event) {
-    event.preventDefault();
-  },
-  "click .createAssignmentBtn": function(event, template) {
-    var formObj = template.find("form");
-    var formJson = FormUtils.serializeForm(formObj);
-    if (formJson.assignmentType === "Other") {
-      formJson.assignmentType = formJson.assignmentTypeCustomName.split(" ")[0].toLowerCase();
-    } else {
-      formJson.assignmentType = formJson.assignmentType.toLowerCase();
+    if (assignmentType) {
+      return assignmentType.toProperCase();
     }
-    Assignments.insert(formJson);
-    formObj.reset();
-    Session.set("assignmentType", null);
-  },
-  "change select[name=assignmentType]": function(event) {
-    Session.set("assignmentType", event.target.value);
   }
 });
-
-Template.addAssignment.helpers({
-  "isTypeOther": function() {
-    return Session.get("assignmentType") === "Other";
-  },
-  "assignments": function() {
-    return Assignments.find();
-  }
-});
-
-Template.assignments.helpers({
-  "assignments": function() {
-    console.log(Assignments.find());
-    return Assignments.find();
-  }
-});
-
-

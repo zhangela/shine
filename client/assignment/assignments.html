@@ -1,0 +1,24 @@
+<template name="assignments">
+  <div class="panel panel-default">
+  <div class="panel-heading">Current Assignments</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Week #</th>
+        <th>Type</th>
+        <th>Due Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each assignments}} 
+      <tr>
+        <td>Week {{this.weekNum}}</td> 
+        <td>{{this.assignmentType}}</td>
+        <td>N/A</td>
+        <td><a href="/admin/weeks/{{this.weekNum}}/{{this.assignmentType}}/questions">Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+</template>
