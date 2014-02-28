@@ -16,8 +16,9 @@
         <td>Week {{this.weekNum}}</td> 
         <td>{{this.assignmentType}}</td>
         <td>N/A</td>
-        <td><a href="/admin/weeks/{{this.weekNum}}/{{this.assignmentType}}/questions">Edit</a></td>
-      </tr>
+        <td><a href="{{pathFor 'addQuestion'}}">Edit</a></td>
+<!--         <td><a href="/admin/weeks/{{this.weekNum}}/{{this.assignmentType}}/questions">Edit</a></td>
+ -->      </tr>
     {{/each}}
   </tbody>
 </table>

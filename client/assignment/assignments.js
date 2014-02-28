@@ -1,6 +1,5 @@
 Template.assignments.helpers({
   "assignments": function() {
-    console.log(Assignments.find());
-    return Assignments.find();
+    return Assignments.find({}, {sort: {weekNum: 1}});
   }
 });
