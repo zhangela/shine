@@ -1,5 +1,8 @@
 Router.configure({
-  layoutTemplate: 'layout'
+  layoutTemplate: 'layout',
+  waitOn: function () {
+    return Meteor.subscribe("assignments");
+  }
 });
 
 Router.map(function () {
@@ -18,6 +21,9 @@ Router.map(function () {
     template: 'assignment',
     data: function() {
       return Assignments.findOne({weekNum: this.params.weekNum, assignmentType: this.params.assignmentType});
+    },
+    waitOn: function () {
+      Meteor.subscribe("questions");
     }
   });
 
@@ -42,6 +48,9 @@ Router.map(function () {
 
   this.route('admin/users/manage', {
     path: 'admin/users/manage',
-    template: 'manageUsers'
+    template: 'manageUsers',
+    waitOn: function () {
+      return Meteor.subscribe("userGroups");
+    }
   });
 });
