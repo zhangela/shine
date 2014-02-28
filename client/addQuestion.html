@@ -2,17 +2,7 @@
 
   <form class="form-horizontal" role="form">
 
-    <div class="form-group">
-      <label for="questionAssignment" class="col-sm-2 control-label">Assignment</label>
-      <div class="col-sm-10">
-        <select name="questionAssignment" class="form-control">
-          {{#each assignments}}
-            <option value="{{_id}}">{{displayedName}}</option>
-          {{/each}}
-        </select>
-      </div>
-    </div>
-
+    <input type="hidden" name="questionAssignment" value="{{this._id}}"/>
     <div class="form-group">
       <label for="questionType" class="col-sm-2 control-label">Question Type</label>
       <div class="col-sm-10">

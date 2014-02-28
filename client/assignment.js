@@ -58,6 +58,10 @@ Template.assignment.helpers({
       });
       return testResult.result.numCorrect / testResult.result.numTotal * 100;
     }
+  },
+  "toProperCase": function(assignmentType) {
+    console.log(assignmentType.toProperCase());
+    return assignmentType.toProperCase();
   }
 });
 
@@ -84,13 +88,19 @@ Template.addAssignment.events({
 });
 
 Template.addAssignment.helpers({
-  // "questions": function() {
-  //   return Assignments.find();
-  // },
   "isTypeOther": function() {
     return Session.get("assignmentType") === "Other";
+  },
+  "assignments": function() {
+    return Assignments.find();
   }
 });
 
+Template.assignments.helpers({
+  "assignments": function() {
+    console.log(Assignments.find());
+    return Assignments.find();
+  }
+});
 
 

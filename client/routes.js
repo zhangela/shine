@@ -13,19 +13,19 @@ Router.map(function () {
     template: 'home'
   });
 
-  this.route('assignments', {
-    path: '/weeks/:week/:type/questions/add',
+  this.route('assignment', {
+    path: '/weeks/:weekNum/:assignmentType',
     template: 'assignment',
     data: function() {
-      return Assignments.findOne({week: this.params.week, type: this.params.type});
+      return Assignments.findOne({weekNum: this.params.weekNum, assignmentType: this.params.assignmentType});
     }
   });
 
   this.route('addQuestion', {
-    path: 'admin/weeks/:week/:type/questions/add',
+    path: 'admin/weeks/:weekNum/:assignmentType/questions',
     template: 'addQuestion',
     data: function() {
-      return Assignments.findOne({week: this.params.week, type: this.params.type});
+      return Assignments.findOne({weekNum: this.params.weekNum, assignmentType: this.params.assignmentType});
     }
   });
 
@@ -34,10 +34,7 @@ Router.map(function () {
     template: 'addAssignment',
     before: function () {
       if (!Meteor.user()) {
-        // render the login template but keep the url in the browser the same
         this.render('login');
-
-        // stop the rest of the before hooks and the action function 
         this.stop();
       }
     }
