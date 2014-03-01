@@ -13,12 +13,16 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish("userGroups", function () {
-    if (this.userId && Meteor.user().isAdmin) {
-      // admin can see all user groups
-      return UserGroups.find({});
-    } else if (this.userId) {
-      // owners can see their groups
-      return UserGroups.find({owner: this.userId});
+    if (this.userId) {
+      var currentUser = Meteor.users.find(this.userId);
+
+      if (currentUser.admin) {
+        // admin can see all user groups
+        return UserGroups.find({});
+      } else {
+        // owners can see their groups
+        return UserGroups.find({owner: this.userId});
+      }
     }
   });
 
