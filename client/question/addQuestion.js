@@ -5,11 +5,15 @@ Template.addQuestion.events({
   "click .submitBtn": function(event, template) {
     var formObj = template.find("form");
     var formJson = FormUtils.serializeForm(formObj);
-    var questionID = Questions.insert(formJson);
-    var assignmentID = formJson.questionAssignment;
-    Assignments.update({_id: assignmentID}, {$push: {questions: questionID}});
-    formObj.reset();
-    Session.set("uploadedImage", null);
+    
+    Meteor.call("createQuestion", formJson, function (error) {
+      if (error) {
+        alert("Error with saving question: " + error.reason);
+      } else {
+        formObj.reset();
+        Session.set("uploadedImage", null);
+      }
+    });
   },
   "change select[name=questionType]": function(event) {
     Session.set("questionType", event.target.value);
