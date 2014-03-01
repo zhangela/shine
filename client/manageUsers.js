@@ -14,7 +14,7 @@ Template.manageUsers.events({
     formObj.reset();
   },
   "click .createGroupBtn": function() {
-      UserGroups.insert({owner: Meteor.userId()});
+    Meteor.call("createUserGroup");
   }
 });
 
