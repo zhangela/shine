@@ -1,14 +1,32 @@
 <template name="users">
-  {{#each userGroup.users }}
-    <div>
-      {{#with userIDToUser this}}
-        {{first emails}}, diagnosis:
-        {{#if assignmentResult this "diagnosis" }}
-          {{assignmentResult this "diagnosis"}}
-        {{else}}
-          Not Completed.
-        {{/if }}
-      {{/with}}
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Students in Your Group</h3>
     </div>
-  {{/each}}
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Completed Assignments</th>
+            <th>Stars</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each userGroup.users }} 
+          {{#with userIDToUser this}}
+          <tr>
+            <td>{{first emails}}</td> 
+            <td>{{completedAssignmentNames completed}}</td>
+            <td>N/A</td>
+            <td><a href="{{pathFor 'addQuestion'}}">Edit</a></td>
+          </tr>
+          {{/with}}
+        {{/each}}
+      </tbody>
+    </table>
+    </div>
+  </div>
 </template>
