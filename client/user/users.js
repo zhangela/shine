@@ -1,3 +1,9 @@
+Template.users.events({
+  "click .addStarBtn": function() {
+    Meteor.call("addStarForUser", this._id);
+  }
+});
+
 Template.users.helpers({
   "assignments": function() {
     return Assignments.find();
@@ -10,14 +16,14 @@ Template.users.helpers({
   "userIDToUser": function(userID) {
     return Meteor.users.findOne(userID);
   },
-  "first": function(emails) {
-    if (emails) {
-      return emails[0].address;
+  "email": function() {
+    if (this.emails) {
+      return this.emails[0].address;
     }
   },
-  "completedAssignmentNames": function(completed) {
+  "completedAssignmentNames": function() {
     var completedAssignmentNames = [];
-    _.each(completed, function(assignment) {
+    _.each(this.completed, function(assignment) {
       completedAssignmentNames.push("Week " + assignment.weekNum + " " + assignment.assignmentType.toProperCase());
     });
     return completedAssignmentNames.join(", ");

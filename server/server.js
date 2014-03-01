@@ -22,6 +22,10 @@ Meteor.methods({
       }
     );
   },
+  "addStarForUser": function(userId) {
+    Meteor.users.update({_id: userId}, {$inc: {stars: 1}});
+  },
+
   "addNewUser": function(user) {
     var userID = Accounts.createUser(user);
     var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;

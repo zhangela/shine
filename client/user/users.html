@@ -1,6 +1,6 @@
 <template name="users">
 
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-heading">
       <h3 class="panel-title">Students in Your Group</h3>
     </div>
@@ -18,10 +18,10 @@
         {{#each userGroup.users }} 
           {{#with userIDToUser this}}
           <tr>
-            <td>{{first emails}}</td> 
-            <td>{{completedAssignmentNames completed}}</td>
-            <td>N/A</td>
-            <td><a href="{{pathFor 'addQuestion'}}">Edit</a></td>
+            <td>{{email}}</td> 
+            <td>{{completedAssignmentNames}}</td>
+            <td>{{stars}}</td>
+            <td><button class="addStarBtn btn btn-default btn-sm">Add Star</button></td>
           </tr>
           {{/with}}
         {{/each}}
