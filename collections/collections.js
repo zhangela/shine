@@ -15,4 +15,8 @@ if (Meteor.isServer) {
   Meteor.publish("userGroups", function () {
     return UserGroups.find({});
   });
+
+  Meteor.publish("users", function () {
+    return Meteor.users.find({});
+  });
 }

@@ -1,7 +1,11 @@
 Router.configure({
   layoutTemplate: 'layout',
   waitOn: function () {
-    return Meteor.subscribe("assignments");
+    return [
+      Meteor.subscribe("assignments"),
+      Meteor.subscribe("userGroups")
+    ];
+
   }
 });
 
@@ -27,6 +31,16 @@ Router.map(function () {
     }
   });
 
+
+  // ADMIN ACCESSABLE ROUTES ONLY
+  this.route('admin', {
+    path: 'admin',
+    template: 'admin',
+    waitOn: function() {
+      return Meteor.subscribe("users");
+    }
+  });
+
   this.route('addQuestion', {
     path: 'admin/weeks/:weekNum/:assignmentType/questions',
     template: 'addQuestion',
@@ -48,9 +62,6 @@ Router.map(function () {
 
   this.route('admin/users/manage', {
     path: 'admin/users/manage',
-    template: 'manageUsers',
-    waitOn: function () {
-      return Meteor.subscribe("userGroups");
-    }
+    template: 'manageUsers'
   });
 });
