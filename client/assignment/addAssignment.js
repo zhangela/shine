@@ -11,12 +11,12 @@ Template.addAssignment.events({
       formJson.assignmentType = formJson.assignmentType.toLowerCase();
     }
     
-    Meteor.call("createAssignment", function (error) {
-      if (! error) {
+    Meteor.call("createAssignment", formJson, function (error) {
+      if (error) {
+        alert("Error with saving assignment: " + error.reason);
+      } else {
         formObj.reset();
         Session.set("assignmentType", null);
-      } else {
-        alert("Error with saving assignment: " + error.reason);
       }
     });
   },

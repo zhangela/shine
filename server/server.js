@@ -22,7 +22,9 @@ Meteor.methods({
     );
   },
   "addNewUser": function(user) {
-    return Accounts.createUser(user);
+    var userID = Accounts.createUser(user);
+    var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
+    UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
   }
 });
 

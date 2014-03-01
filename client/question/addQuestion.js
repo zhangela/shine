@@ -6,12 +6,12 @@ Template.addQuestion.events({
     var formObj = template.find("form");
     var formJson = FormUtils.serializeForm(formObj);
     
-    Meteor.call("createQuestion", function (error) {
-      if (! error) {
+    Meteor.call("createQuestion", formJson, function (error) {
+      if (error) {
+        alert("Error with saving question: " + error.reason);
+      } else {
         formObj.reset();
         Session.set("uploadedImage", null);
-      } else {
-        alert("Error with saving question: " + error.reason);
       }
     });
   },
