@@ -1,7 +1,6 @@
 Meteor.methods({
   "updateCompletedAssignmentsForUser": function(assignmentID, correctAnswers) {
     var assignment = Assignments.findOne(assignmentID);
-    var assignmentName = assignment.name;
     var assignmentResult = {
         assignmentID: assignmentID,
         numCorrect: correctAnswers.length,
@@ -14,7 +13,9 @@ Meteor.methods({
       {
         $push: {
           completed: {
-            name: assignmentName,
+            _id: assignment._id,
+            weekNum: assignment.weekNum,
+            assignmentType: assignment.assignmentType,
             result: assignmentResult
           }
         }

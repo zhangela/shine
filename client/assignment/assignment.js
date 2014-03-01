@@ -43,9 +43,9 @@ Template.assignment.helpers({
   "completedByCurrentUser": function() {
     if (Meteor.user()) {
       var completedAssignments = _.map(Meteor.user().completed, function(test) {
-        return test.name;
+        return test._id;
       });
-      return _.contains(completedAssignments, this.name);
+      return _.contains(completedAssignments, this._id);
     }
   },
   "currentAssignmentScore": function(assignmentName) {
