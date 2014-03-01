@@ -1,17 +1,15 @@
 <template name="admin">
 
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span2">
-        <h4>Users</h4>
-        {{#each usersInUserGroup}}
-          <div> {{userEmailFromID this}} </div>
-        {{/each}}
-      </div>
-      <div class="span10">
-        <h4>Assignments</h4>
-        {{> addAssignment}}
-      </div>
-    </div>
+
+<div class="row">
+  <div class="col-md-6">
+    {{> addUser}}
+    {{> users}}
   </div>
+  <div class="col-md-6">
+    {{> addAssignment}}
+    {{> assignments}}
+  </div>
+</div>
+
 </template>

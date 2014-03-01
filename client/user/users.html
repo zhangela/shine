@@ -1,0 +1,14 @@
+<template name="users">
+  {{#each userGroup.users }}
+    <div>
+      {{#with userIDToUser this}}
+        {{first emails}}, diagnosis:
+        {{#if assignmentResult this "diagnosis" }}
+          {{assignmentResult this "diagnosis"}}
+        {{else}}
+          Not Completed.
+        {{/if }}
+      {{/with}}
+    </div>
+  {{/each}}
+</template>

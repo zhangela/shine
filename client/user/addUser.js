@@ -1,4 +1,4 @@
-Template.manageUsers.events({
+Template.addUser.events({
   "submit form": function(event) {
     event.preventDefault();
   },
@@ -18,21 +18,10 @@ Template.manageUsers.events({
   }
 });
 
-Template.manageUsers.helpers({
-  "assignments": function() {
-    return Assignments.find();
-  },
+Template.addUser.helpers({
   "userGroup": function() {
     if (Meteor.user()) {
       return UserGroups.findOne({owner: Meteor.userId()});
-    }
-  },
-  "userIDToUser": function(userID) {
-    return Meteor.users.findOne(userID);
-  },
-  "first": function(emails) {
-    if (emails) {
-      return emails[0].address;
     }
   }
 });

@@ -1,0 +1,33 @@
+<template name="addUser">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Add Student</h3>
+    </div>
+    <div class="panel-body">
+      {{#unless userGroup}}
+        <p>You can see the assignment statistics of all the students in your group. Click to create group.</p>
+        <button class="createGroupBtn btn btn-default">Create Group</button>
+      {{else}}
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" name="email" placeholder="e.g. angela@mit.edu">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="password" value="shinegirl">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="createUserBtn btn btn-default">Add</button>
+            </div>
+          </div>
+        </form>
+    {{/unless}}
+  </div>
+</template>

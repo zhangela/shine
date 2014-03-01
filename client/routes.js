@@ -31,13 +31,19 @@ Router.map(function () {
     }
   });
 
-
   // ADMIN ACCESSABLE ROUTES ONLY
+  
   this.route('admin', {
     path: 'admin',
     template: 'admin',
     waitOn: function() {
       return Meteor.subscribe("users");
+    },
+    before: function () {
+      if (!Meteor.user()) {
+        this.render('login');
+        this.stop();
+      }
     }
   });
 
@@ -47,21 +53,5 @@ Router.map(function () {
     data: function() {
       return Assignments.findOne({weekNum: this.params.weekNum, assignmentType: this.params.assignmentType});
     }
-  });
-
-  this.route('addAssignment', {
-    path: 'admin/assignments',
-    template: 'addAssignment',
-    before: function () {
-      if (!Meteor.user()) {
-        this.render('login');
-        this.stop();
-      }
-    }
-  });
-
-  this.route('admin/users/manage', {
-    path: 'admin/users/manage',
-    template: 'manageUsers'
   });
 });
