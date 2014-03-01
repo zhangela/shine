@@ -5,16 +5,16 @@ Template.manageUsers.events({
   "click .createUserBtn": function(event, template) {
     var formObj = template.find("form");
     var formJson = FormUtils.serializeForm(formObj);
-    Meteor.call("addNewUser", formJson, function(error, userID) {
-      if (!error) {
-        var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
-        UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
+    Meteor.call("addNewUser", formJson, function (error) {
+      if (error) {
+        alert("Error with adding user: " + error.reason);
+      } else {
+        formObj.reset();
       }
     });
-    formObj.reset();
   },
   "click .createGroupBtn": function() {
-      UserGroups.insert({owner: Meteor.userId()});
+    Meteor.call("createUserGroup");
   }
 });
 
