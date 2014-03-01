@@ -8,7 +8,7 @@ Template.admin.helpers({
     }
   },
 
-  "userObjFromID": function(userId) {
+  "userEmailFromID": function(userId) {
     var user = Meteor.users.findOne({_id: userId});
     if (user) {
       return user.emails[0].address;
