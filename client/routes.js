@@ -5,8 +5,18 @@ Router.configure({
       Meteor.subscribe("assignments"),
       Meteor.subscribe("userGroups")
     ];
-
   }
+});
+
+var checkForAdmin = function () {
+  if (! Permissions.isAdmin(Meteor.user())) {
+    this.render("home");
+    this.stop();
+  }
+};
+
+Router.before(checkForAdmin, {
+  only: ["admin", "editAssignment"]
 });
 
 Router.map(function () {

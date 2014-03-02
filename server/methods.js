@@ -1,7 +1,10 @@
 Meteor.methods({
   // assignments
   createAssignment: function (assignment) {
-    // XXX add permissions
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+
     // XXX add validation
 
     Assignments.insert(assignment);
@@ -9,6 +12,10 @@ Meteor.methods({
 
   // user groups
   createUserGroup: function () {
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+
     UserGroups.insert({
       owner: this.userId
     });
@@ -17,7 +24,10 @@ Meteor.methods({
   // questions
   createQuestion: function (question) {
     // XXX add validation
-    // XXX add permissions
+    
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
 
     var questionID = Questions.insert(question);
     var assignmentID = question.questionAssignment;
@@ -30,9 +40,48 @@ Meteor.methods({
   },
 
   deleteQuestion: function(questionID) {
-    console.log(questionID);
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+
     var question = Questions.findOne({_id: questionID});
     Assignments.update({_id: question.questionAssignment}, {$pull: {questions: questionID}});
     Questions.remove({_id: questionID});
+  },
+
+  addAdmin: function (data) {
+    check(data, {
+      email: String,
+      password: String
+    });
+
+    var email = data.email;
+    var password = data.password;
+
+    var user = Meteor.users.findOne({"emails.address": email});
+    if (user) {
+      Meteor.users.update({_id: user._id}, {
+        $set: {
+          isAdmin: true
+        }
+      });
+    } else {
+      Accounts.createUser({
+        email: email,
+        password: password
+      });
+    }
+  },
+
+  removeAdmin: function (userId) {
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+    
+    Meteor.users.update({
+      _id: userId
+    }, {
+      $set: {isAdmin: false}
+    });
   }
 });

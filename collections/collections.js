@@ -16,7 +16,7 @@ if (Meteor.isServer) {
     if (this.userId) {
       var currentUser = Meteor.users.find(this.userId);
 
-      if (currentUser.admin) {
+      if (Permissions.isAdmin(currentUser)) {
         // admin can see all user groups
         return UserGroups.find({});
       } else {
