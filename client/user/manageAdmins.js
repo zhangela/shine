@@ -3,11 +3,10 @@ Template.manageAdmins.events({
     event.preventDefault();
 
     var data = FormUtils.serializeForm(template.find("form"));
-
-    Meteor.call("addAdmin", data, function (error, result) {
-
-    });
+    Meteor.call("addAdmin", data, function (error, result) {});
+    template.find("form").reset();
   },
+  
   "click .removeAdmin": function () {
     Meteor.call("removeAdmin", this._id);
   }
