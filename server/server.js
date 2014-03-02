@@ -22,19 +22,22 @@ Meteor.methods({
       correctAnswers: correctAnswers
     };
 
-    Meteor.users.update(
-      {_id: this.userId},
-      {
-        $push: {
-          completed: {
-            _id: assignment._id,
-            weekNum: assignment.weekNum,
-            assignmentType: assignment.assignmentType,
-            result: assignmentResult
+    // make sure we can't submit twice
+    if(! Meteor.users.findOne({"completed._id": assignment._id})) {
+      Meteor.users.update(
+        {_id: this.userId},
+        {
+          $push: {
+            completed: {
+              _id: assignment._id,
+              weekNum: assignment.weekNum,
+              assignmentType: assignment.assignmentType,
+              result: assignmentResult
+            }
           }
         }
-      }
-    );
+      );
+    }
   },
   "addStarForUser": function(userId) {
     Meteor.users.update({_id: userId}, {$inc: {stars: 1}});

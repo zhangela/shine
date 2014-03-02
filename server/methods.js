@@ -6,6 +6,9 @@ Meteor.methods({
     }
 
     // XXX add validation
+    if (assignment.timerLength) {
+      assignment.timed = true;
+    }
 
     Assignments.insert(assignment);
   },

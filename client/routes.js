@@ -65,22 +65,25 @@ Router.map(function () {
     load: function () {
       Session.set("timer", undefined);
 
-      var amplifyKey = Meteor.userId() + "/" +
-        this.params.weekNum + "/" + this.params.assignmentType;
+      if (this.getData() && this.getData().timed) {
+        var amplifyKey = Meteor.userId() + "/" +
+          this.params.weekNum + "/" + this.params.assignmentType;
 
-      Meteor.call("openedAssignment",
-        this.params.weekNum, this.params.assignmentType);
+        Meteor.call("openedAssignment",
+          this.params.weekNum, this.params.assignmentType);
 
-      var totalTime = 30;
+        var totalTime = parseInt(this.getData().timerLength, 10);
 
-      if (! amplify.store(amplifyKey)) {
-        amplify.store(amplifyKey, new Date());
-        startTimer(totalTime);
-      } else {
-        var startTime = amplify.store(amplifyKey);
-        var timeLeft = totalTime - (moment().unix() - moment(startTime).unix());
+        if (! amplify.store(amplifyKey)) {
+          amplify.store(amplifyKey, new Date());
+          startTimer(totalTime);
+        } else {
+          var startTime = amplify.store(amplifyKey);
+          var timeLeft = totalTime - (moment().unix() -
+            moment(startTime).unix());
 
-        startTimer(Math.max(timeLeft, 0));
+          startTimer(Math.max(timeLeft, 0));
+        }
       }
     }
   });
