@@ -42,11 +42,13 @@ Router.map(function () {
     path: '/weeks/:weekNum/:assignmentType',
     template: 'assignment',
     data: function() {
-      return Assignments.findOne({
-        weekNum: this.params.weekNum,
-        assignmentType: this.params.assignmentType,
-        assignmentLevel: Meteor.user().level
-      });
+      if (Meteor.user()) {
+        return Assignments.findOne({
+          weekNum: this.params.weekNum,
+          assignmentType: this.params.assignmentType,
+          assignmentLevel: Meteor.user().level
+        });
+      }
     },
     waitOn: function () {
       Meteor.subscribe("questions");
@@ -81,14 +83,11 @@ Router.map(function () {
     path: 'admin/weeks/:weekNum/:assignmentType/:assignmentLevel',
     template: 'editAssignment',
     data: function() {
-      console.log("hi");
       var assignment = Assignments.findOne({
         weekNum: this.params.weekNum,
         assignmentType: this.params.assignmentType,
         assignmentLevel: this.params.assignmentLevel
       });
-
-      console.log(this.params);
 
       return assignment;
     },
