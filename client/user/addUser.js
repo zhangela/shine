@@ -5,7 +5,6 @@ Template.addUser.events({
   "click .createUserBtn": function(event, template) {
     var formObj = template.find("form");
     var formJson = FormUtils.serializeForm(formObj);
-    console.log(formJson);
     Meteor.call("addNewUser", formJson, function (error) {
       if (error) {
         alert("Error with adding user: " + error.reason);
