@@ -74,9 +74,15 @@ Meteor.methods({
         }
       });
     } else {
-      Accounts.createUser({
+      var userId = Accounts.createUser({
         email: email,
         password: password
+      });
+
+      Meteor.users.update({_id: userId}, {
+        $set: {
+          isAdmin: true
+        }
       });
     }
   },
