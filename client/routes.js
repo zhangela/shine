@@ -10,10 +10,22 @@ Router.configure({
   before: triggerGoogleAnalytics
 });
 
+var triggerGoogleAnalytics = function () {
+  if (window.ga) {
+    ga('send', 'pageview', window.location.origin + window.location.hash);
+  }
+};
+
+var checkForAdmin = function () {
+  if (! Permissions.isAdmin(Meteor.user())) {
+    this.render("home");
+    this.stop();
+  }
+};
+
 Router.before(checkForAdmin, {
   only: ["admin", "editAssignment"]
 });
-
 
 Router.map(function () {
   /**
@@ -69,27 +81,19 @@ Router.map(function () {
     path: 'admin/weeks/:weekNum/:assignmentType/:assignmentLevel',
     template: 'editAssignment',
     data: function() {
-      return Assignments.findOne({
+      console.log("hi");
+      var assignment = Assignments.findOne({
         weekNum: this.params.weekNum,
         assignmentType: this.params.assignmentType,
         assignmentLevel: this.params.assignmentLevel
       });
+
+      console.log(this.params);
+
+      return assignment;
     },
     waitOn: function () {
       Meteor.subscribe("questions");
     }
   });
 });
-
-var triggerGoogleAnalytics = function () {
-  if (window.ga) {
-    ga('send', 'pageview', window.location.origin + window.location.hash);
-  }
-};
-
-var checkForAdmin = function () {
-  if (! Permissions.isAdmin(Meteor.user())) {
-    this.render("home");
-    this.stop();
-  }
-};
