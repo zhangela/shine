@@ -1,6 +1,6 @@
 Meteor.methods({
   // assignments
-  createAssignment: function (assignment) {
+  saveAssignment: function (assignment) {
     if (! Permissions.isAdmin(Meteor.user())) {
       throw new Meteor.Error(403, "Need to be admin.");
     }
@@ -10,7 +10,15 @@ Meteor.methods({
       assignment.timed = true;
     }
 
-    Assignments.insert(assignment);
+    if (assignment._id) { // if we are editing
+      Assignments.update({_id: assignment._id}, {
+        $set: _.omit(assignment, ["_id"])
+      });
+    } else { // if we are creating a new one
+      Assignments.insert(assignment);
+    }
+
+    return assignment;
   },
 
   // user groups
