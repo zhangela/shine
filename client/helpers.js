@@ -24,6 +24,10 @@ Handlebars.registerHelper("currentUserIsAdmin", function() {
     return Permissions.isAdmin(Meteor.user());
 });
 
+Handlebars.registerHelper("equals", function (a, b) {
+  return a === b;
+});
+
 
 $(function() {
   filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");

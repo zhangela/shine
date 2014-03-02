@@ -1,4 +1,4 @@
-Template.addAssignment.events({
+Template.assignmentForm.events({
   "submit form": function(event) {
     event.preventDefault();
   },
@@ -10,13 +10,21 @@ Template.addAssignment.events({
     } else {
       formJson.assignmentType = formJson.assignmentType.toLowerCase();
     }
+
+    if (this._id) {
+      formJson._id = this._id; // if we are editing an existing assignment
+    }
     
-    Meteor.call("createAssignment", formJson, function (error) {
+    Meteor.call("saveAssignment", formJson, function (error, newAssignment) {
       if (error) {
         alert("Error with saving assignment: " + error.reason);
       } else {
         formObj.reset();
         Session.set("assignmentType", null);
+
+        if (Router.current().route.name === "editAssignment") {
+          Router.go("editAssignment", newAssignment);
+        }
       }
     });
   },
@@ -25,9 +33,14 @@ Template.addAssignment.events({
   }
 });
 
-Template.addAssignment.helpers({
+Template.assignmentForm.helpers({
   "isTypeOther": function() {
-    return Session.get("assignmentType") === "Other";
+    if (Session.get("assignmentType")) {
+      return Session.get("assignmentType") === "Other";
+    } else {
+      return ! _.contains(["exercise", "homework", "challenge"],
+        this.assignmentType);
+    }
   },
   "assignments": function() {
     return Assignments.find();
