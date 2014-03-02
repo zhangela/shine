@@ -14,6 +14,12 @@ Handlebars.registerHelper("assignmentResult", function(user, assignmentName) {
       }
 });
 
+Handlebars.registerHelper("toProperCase", function(assignmentType) {
+    if (assignmentType) {
+      return assignmentType.toProperCase();
+    }
+});
+
 $(function() {
   filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");
 

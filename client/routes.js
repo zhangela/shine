@@ -47,11 +47,14 @@ Router.map(function () {
     }
   });
 
-  this.route('addQuestion', {
-    path: 'admin/weeks/:weekNum/:assignmentType/questions',
-    template: 'addQuestion',
+  this.route('editAssignment', {
+    path: 'admin/weeks/:weekNum/:assignmentType',
+    template: 'editAssignment',
     data: function() {
       return Assignments.findOne({weekNum: this.params.weekNum, assignmentType: this.params.assignmentType});
+    },
+    waitOn: function () {
+      Meteor.subscribe("questions");
     }
   });
 });

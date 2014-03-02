@@ -1,0 +1,16 @@
+<template name="assignmentPreview">
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Week {{this.weekNum}} {{toProperCase this.assignmentType}}</h2>
+  </div>
+  <div class="panel-body">
+    <span class="hidden assignmentID">{{this._id}}</span>
+    {{#if this.questions}}
+      {{#each this.questions}}
+        {{> question questionObjFromID}}
+      {{/each}}
+    {{else}}
+      <p>This assignment doesn't have any questions right now.</p>
+    {{/if}}
+  </div>
+</template>
