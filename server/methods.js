@@ -19,7 +19,9 @@ Meteor.methods({
       throw new Meteor.Error(403, "Need to be admin.");
     }
 
-    UserGroups.insert({
+    UserGroups.upsert({
+      owner: this.userId
+    }, {
       owner: this.userId
     });
   },

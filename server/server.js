@@ -8,7 +8,14 @@ Meteor.methods({
           correctAnswers.push(answer.questionID);
         }
       } else {
-        if (parseFloat(questionObj.answerCorrectNumeric) === parseFloat(answer.answerText)) {
+        var correctAnswer = parseFloat(questionObj.answerCorrectNumeric);
+        var userAnswer = parseFloat(answer.answerText);
+
+        var answerDifference = Math.abs(correctAnswer - userAnswer);
+        var fractionOfCorrect = Math.abs(correctAnswer)/100;
+
+        // within a 1% margin
+        if (answerDifference < fractionOfCorrect) {
           correctAnswers.push(answer.questionID);
         }
       }
