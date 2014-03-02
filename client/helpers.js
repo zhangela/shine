@@ -20,6 +20,11 @@ Handlebars.registerHelper("toProperCase", function(assignmentType) {
     }
 });
 
+Handlebars.registerHelper("currentUserIsAdmin", function() {
+    return Permissions.isAdmin(Meteor.user());
+});
+
+
 $(function() {
   filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");
 
