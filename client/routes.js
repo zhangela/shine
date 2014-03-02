@@ -1,3 +1,9 @@
+var triggerGoogleAnalytics = function () {
+  if (window.ga) {
+    ga('send', 'pageview', window.location.origin + window.location.hash);
+  }
+};
+
 Router.configure({
   layoutTemplate: 'layout',
   waitOn: function () {
@@ -6,7 +12,8 @@ Router.configure({
       Meteor.subscribe("userGroups"),
       Meteor.subscribe("users")
     ];
-  }
+  },
+  before: triggerGoogleAnalytics
 });
 
 var checkForAdmin = function () {
