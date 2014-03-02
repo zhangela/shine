@@ -27,5 +27,12 @@ Meteor.methods({
     }, {
       $push: {questions: questionID}
     });
+  },
+
+  deleteQuestion: function(questionID) {
+    console.log(questionID);
+    var question = Questions.findOne({_id: questionID});
+    Assignments.update({_id: question.questionAssignment}, {$pull: {questions: questionID}});
+    Questions.remove({_id: questionID});
   }
 });

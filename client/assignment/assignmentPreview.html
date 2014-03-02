@@ -7,7 +7,14 @@
     <span class="hidden assignmentID">{{this._id}}</span>
     {{#if this.questions}}
       {{#each this.questions}}
-        {{> question questionObjFromID}}
+        <div class="row">
+          <div class="col-sm-11">
+            {{> question questionObjFromID}}
+          </div>
+          <div class="col-sm-1">
+            <button class="deleteBtn btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+          </div>
+        </div>
       {{/each}}
     {{else}}
       <p>This assignment doesn't have any questions right now.</p>
