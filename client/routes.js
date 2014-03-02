@@ -23,8 +23,19 @@ var checkForAdmin = function () {
   }
 };
 
+var mustBeLoggedIn = function () {
+  if (! Meteor.user()) {
+    this.render("home");
+    this.stop();
+  }
+};
+
 Router.before(checkForAdmin, {
   only: ["admin", "editAssignment"]
+});
+
+Router.before(mustBeLoggedIn, {
+  except: ['home']
 });
 
 Router.map(function () {

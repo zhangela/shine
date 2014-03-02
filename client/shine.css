@@ -35,6 +35,17 @@
   }
 }
 
+
+.fullWidth { 
+  width: 100%;
+}
+
+.centered {
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
