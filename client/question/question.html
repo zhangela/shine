@@ -4,7 +4,9 @@
       <label for="questionText">{{questionText}}</label>
       {{#if uploadedImage}}
         <div>
-          <img src="{{uploadedImage}}" width="30%" />
+          <a href="{{uploadedImage}}" target="_blank">
+            <img src="{{uploadedImage}}" style="width: 40%;" />
+          </a>
         </div>
         <br>
       {{/if}}

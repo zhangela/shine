@@ -28,14 +28,14 @@
           <label for="questionLabel" class="col-sm-4 control-label">Image</label>
           <div class="col-sm-8">
             <button class="uploadBtn btn btn-default">Upload Image</button>
-          </div>
-            {{#if uploadedImage}}
+              {{#if uploadedImage}}
               <div>
                 <br>
                 <img src="{{uploadedImage}}" width="50%"/>
               </div>
               <input type="hidden" name="uploadedImage" value="{{uploadedImage}}"/>
             {{/if}}
+            </div>
           </div>
         </div>
         {{/isolate}}
