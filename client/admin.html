@@ -1,4 +1,11 @@
 <template name="admin">
+  
+  {{#if currentUser.isSuperAdmin}}
+    <a class="btn btn-default btn-primary btn-lg" href="{{pathFor 'superAdmin'}}">SuperAdmin Only</a>
+    <br />
+    <br />
+  {{/if}}
+
   <div class="row">
     <div class="col-md-6">
       {{> addUser}}

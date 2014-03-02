@@ -95,4 +95,17 @@ Router.map(function () {
       Meteor.subscribe("questions");
     }
   });
+
+  //SUPER ADMIN ACCESS ONLY
+
+  this.route('superAdmin', {
+    path: 'admin/super',
+    template: 'superAdmin',
+    before: function () {
+      if (!Meteor.user() || !Meteor.user().isSuperAdmin) {
+        // stop the rest of the before hooks and the action function 
+        this.stop();
+      }
+    },
+  });
 });

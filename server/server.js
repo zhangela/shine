@@ -64,12 +64,15 @@ Meteor.methods({
 
     var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
     UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
+  },
+  "deleteUser": function(userID) {
+    Meteor.users.remove({_id: userID});
   }
 });
 
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
-        {fields: {'completed': 1, 'emails': 1, 'level': 1}});
+        {fields: {'completed': 1, 'emails': 1, 'level': 1, 'isSuperUser': 1}});
 });
 
 Meteor.publish("allUsersData", function() {
