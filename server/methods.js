@@ -77,11 +77,18 @@ Meteor.methods({
     if (! Permissions.isAdmin(Meteor.user())) {
       throw new Meteor.Error(403, "Need to be admin.");
     }
-    
+
     Meteor.users.update({
       _id: userId
     }, {
       $set: {isAdmin: false}
+    });
+  },
+
+  openedAssignment: function (weekNum, assignmentType) {
+    var assignment = Assignments.findOne({
+      weekNum: weekNum,
+      assignmentType: assignmentType
     });
   }
 });

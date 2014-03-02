@@ -19,6 +19,21 @@ Router.before(checkForAdmin, {
   only: ["admin", "editAssignment"]
 });
 
+var timerInterval;
+
+var tick = function () {
+  if (Session.get("timer") <= 0) {
+    clearInterval(timerInterval);
+  } else {
+    Session.set("timer", Session.get("timer") - 1);
+  }
+};
+
+var startTimer = function (initialTime) {
+  Session.set("timer", initialTime);
+  timerInterval = setInterval(tick, 1000);
+};
+
 Router.map(function () {
   /**
    * The route's name is "home"
@@ -38,6 +53,27 @@ Router.map(function () {
     },
     waitOn: function () {
       Meteor.subscribe("questions");
+    },
+    load: function () {
+      Session.set("timer", undefined);
+      
+      var amplifyKey = Meteor.userId() + "/" +
+        this.params.weekNum + "/" + this.params.assignmentType;
+
+      Meteor.call("openedAssignment",
+        this.params.weekNum, this.params.assignmentType);
+
+      var totalTime = 30;
+
+      if (! amplify.store(amplifyKey)) {
+        amplify.store(amplifyKey, new Date());
+        startTimer(totalTime);
+      } else {
+        var startTime = amplify.store(amplifyKey);
+        var timeLeft = totalTime - (moment().unix() - moment(startTime).unix());
+
+        startTimer(Math.max(timeLeft, 0));
+      }
     }
   });
 

@@ -26,6 +26,14 @@
   margin-bottom: auto;
 }
 
+@media (max-width: 768px) {
+  .navbar-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0 20px;
+  }
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -47,3 +55,5 @@ body {
   padding-top: 20px;
   text-align: center;
 }
+
+

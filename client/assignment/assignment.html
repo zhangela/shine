@@ -1,0 +1,19 @@
+<template name="assignment">
+  {{#if completedByCurrentUser}}
+    <h2>You have completed Week {{this.weekNum}} {{toProperCase this.assignmentType}}.</h2>
+  {{else}}
+    <h2>Welcome to the Week {{this.weekNum}}
+      {{toProperCase this.assignmentType}}!</h2>
+
+    {{#isolate}}
+      {{#if timed}}
+        <h3>Time left: {{timer}}</h3>
+      {{/if}}
+    {{/isolate}}
+    <span class="hidden assignmentID">{{this._id}}</span>
+    {{#each this.questions}}
+      {{> question questionObjFromID}}
+    {{/each}}
+    <button type="submit" class="btn btn-default">Submit</button>
+  {{/if}}
+</template>

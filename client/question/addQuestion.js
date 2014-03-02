@@ -11,6 +11,7 @@ Template.addQuestion.events({
         alert("Error with saving question: " + error.reason);
       } else {
         formObj.reset();
+        Session.set("questionType", "Multiple Choice");
         Session.set("uploadedImage", null);
       }
     });
