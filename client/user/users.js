@@ -1,6 +1,11 @@
 Template.users.events({
   "click .addStarBtn": function() {
     Meteor.call("addStarForUser", this._id);
+  },
+  "click .delete": function (event) {
+    event.preventDefault();
+    
+    Meteor.call("removeUserFromOwnedGroup", this._id);
   }
 });
 
