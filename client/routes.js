@@ -1,9 +1,3 @@
-var triggerGoogleAnalytics = function () {
-  if (window.ga) {
-    ga('send', 'pageview', window.location.origin + window.location.hash);
-  }
-};
-
 Router.configure({
   layoutTemplate: 'layout',
   waitOn: function () {
@@ -15,13 +9,6 @@ Router.configure({
   },
   before: triggerGoogleAnalytics
 });
-
-var checkForAdmin = function () {
-  if (! Permissions.isAdmin(Meteor.user())) {
-    this.render("home");
-    this.stop();
-  }
-};
 
 Router.before(checkForAdmin, {
   only: ["admin", "editAssignment"]
@@ -93,3 +80,16 @@ Router.map(function () {
     }
   });
 });
+
+var triggerGoogleAnalytics = function () {
+  if (window.ga) {
+    ga('send', 'pageview', window.location.origin + window.location.hash);
+  }
+};
+
+var checkForAdmin = function () {
+  if (! Permissions.isAdmin(Meteor.user())) {
+    this.render("home");
+    this.stop();
+  }
+};
