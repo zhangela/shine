@@ -21,6 +21,14 @@ Meteor.methods({
     });
   },
 
+  removeUserFromOwnedGroup: function (userId) {
+    UserGroups.update({owner: this.userId}, {
+      $pull: {
+        users: userId
+      }
+    });
+  },
+
   // questions
   createQuestion: function (question) {
     // XXX add validation

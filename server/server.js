@@ -40,8 +40,16 @@ Meteor.methods({
     Meteor.users.update({_id: userId}, {$inc: {stars: 1}});
   },
 
-  "addNewUser": function(user) {
-    var userID = Accounts.createUser(user);
+  "addNewUser": function (user) {
+    var userID;
+    var existingUser = Meteor.users.findOne({"emails.address": user.email});
+    
+    if (existingUser) {
+      userID = existingUser._id;
+    } else {
+      userID = Accounts.createUser(user);
+    }
+
     var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
     UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
   }
