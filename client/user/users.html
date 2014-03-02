@@ -9,6 +9,7 @@
         <thead>
           <tr>
             <th>Email</th>
+            <th>Level</th>
             <th>Completed Assignments</th>
             <th>Stars</th>
             <th></th>
@@ -20,6 +21,7 @@
           {{#with userIDToUser this}}
           <tr>
             <td>{{email}}</td> 
+            <td>{{level}}</td>
             <td>{{completedAssignmentNames}}</td>
             <td>{{stars}}</td>
             <td><button class="addStarBtn btn btn-default btn-sm">

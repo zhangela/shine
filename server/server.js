@@ -53,6 +53,8 @@ Meteor.methods({
       userID = Accounts.createUser(user);
     }
 
+    Meteor.users.update({_id: userID}, {$set: {level: user.level}});
+
     var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
     UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
   }
@@ -60,12 +62,12 @@ Meteor.methods({
 
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
-        {fields: {'completed': 1, 'emails': 1}});
+        {fields: {'completed': 1, 'emails': 1, 'level': 1}});
 });
 
 Meteor.publish("allUsersData", function() {
     return Meteor.users.find({},
-        {fields: {'completed': 1, 'emails': 1}});
+        {fields: {'completed': 1, 'emails': 1, 'level': 1}});
 });
 
 Meteor.startup(function () {
