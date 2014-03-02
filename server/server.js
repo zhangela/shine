@@ -1,12 +1,26 @@
 Meteor.methods({
-  "updateCompletedAssignmentsForUser": function(assignmentID, correctAnswers) {
+  "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {
+    var correctAnswers = [];
+    _.each(answerArray, function(answer) {
+      var questionObj = Questions.findOne(answer.questionID);
+      if (questionObj.questionType === 'Multiple Choice') {
+        if (questionObj.answerCorrectOption === answer.answerOption) {
+          correctAnswers.push(answer.questionID);
+        }
+      } else {
+        if (parseFloat(questionObj.answerCorrectNumeric) === parseFloat(answer.answerText)) {
+          correctAnswers.push(answer.questionID);
+        }
+      }
+    });
+
     var assignment = Assignments.findOne(assignmentID);
     var assignmentResult = {
-        assignmentID: assignmentID,
-        numCorrect: correctAnswers.length,
-        numTotal: assignment.questions.length,
-        correctAnswers: correctAnswers
-      };
+      assignmentID: assignmentID,
+      numCorrect: correctAnswers.length,
+      numTotal: assignment.questions.length,
+      correctAnswers: correctAnswers
+    };
 
     Meteor.users.update(
       {_id: this.userId},
