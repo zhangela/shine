@@ -56,6 +56,6 @@ Template.assignment.helpers({
     }
   },
   "timer": function () {
-    return Session.get("timer");
+    return Timer.getTimer();
   }
 });
