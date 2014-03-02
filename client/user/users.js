@@ -24,7 +24,10 @@ Template.users.helpers({
   "completedAssignmentNames": function() {
     var completedAssignmentNames = [];
     _.each(this.completed, function(assignment) {
-      completedAssignmentNames.push("Week " + assignment.weekNum + " " + assignment.assignmentType.toProperCase());
+      if (assignment.assignmentType) {
+        completedAssignmentNames.push("Week " + assignment.weekNum + " "
+          + assignment.assignmentType.toProperCase());
+      }
     });
     return completedAssignmentNames.join(", ");
   }

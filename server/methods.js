@@ -90,5 +90,15 @@ Meteor.methods({
       weekNum: weekNum,
       assignmentType: assignmentType
     });
+
+    // XXX make this method do something
+  },
+
+  deleteAssignment: function (assignmentId) {
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+
+    Assignments.remove({_id: assignmentId});
   }
 });

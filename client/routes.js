@@ -3,7 +3,8 @@ Router.configure({
   waitOn: function () {
     return [
       Meteor.subscribe("assignments"),
-      Meteor.subscribe("userGroups")
+      Meteor.subscribe("userGroups"),
+      Meteor.subscribe("users")
     ];
   }
 });
@@ -56,7 +57,7 @@ Router.map(function () {
     },
     load: function () {
       Session.set("timer", undefined);
-      
+
       var amplifyKey = Meteor.userId() + "/" +
         this.params.weekNum + "/" + this.params.assignmentType;
 
@@ -82,9 +83,6 @@ Router.map(function () {
   this.route('admin', {
     path: 'admin',
     template: 'admin',
-    waitOn: function() {
-      return Meteor.subscribe("users");
-    },
     before: function () {
       if (!Meteor.user()) {
         this.render('login');
