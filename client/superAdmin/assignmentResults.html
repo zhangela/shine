@@ -1,0 +1,35 @@
+<template name="assignmentResults">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Assignments</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Week #</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>Due Date</th>
+            <th>Average</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each assignments}} 
+          <tr>
+            <td>Week {{this.weekNum}}</td> 
+            <td>{{this.assignmentType}}</td>
+            <td>{{this.assignmentLevel}}</td>
+            <td>To Be Implemented</td>
+            <td>To Be Implemented</td>
+            <td>
+              <a href="{{pathFor 'editAssignment'}}">View Student Results</a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</template>
