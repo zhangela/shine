@@ -1,7 +1,7 @@
 <template name="allNonAdminUsers">
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-heading">
-      <h3 class="panel-title">Students</h3>
+      <h3 class="panel-title">{{toProperCase this}} Students</h3>
     </div>
     <div class="panel-body">
       <table class="table">
@@ -9,8 +9,9 @@
           <tr>
             <th>Email</th>
             <th>Level</th>
-            <th>Completed Assignments</th>
-            <th>Performance</th>
+            {{#each assignments this}}
+              <th>{{displayedAssignmentName}}</th>
+            {{/each}}
             <th>Stars</th>
             <th></th>
             <th></th>
@@ -22,8 +23,9 @@
           <tr>
             <td>{{email}}</td> 
             <td>{{level}}</td>
-            <td>{{completedAssignmentNames}}</td>
-            <td>To Be Implemented</td>
+            {{#each assignments ../..}}
+              <td>{{completed this._id ..}}</td>
+            {{/each}}
             <td>{{stars}}</td>
             <td><button class="addStarBtn btn btn-default btn-sm">
               Add Star</button></td>

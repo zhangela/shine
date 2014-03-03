@@ -12,13 +12,17 @@ Template.allNonAdminUsers.events({
 });
 
 Template.allNonAdminUsers.helpers({
-  "assignments": function() {
-    return Assignments.find();
+  "assignments": function(level) {
+    return Assignments.find({assignmentLevel: level}, {sort: {weekNum: 1, assignmentType: 1}});
+  },
+  "displayedAssignmentName": function() {
+    return "Week " + this.weekNum + " " + this.assignmentType.toProperCase();
   },
   "allNonAdminUsers": function() {
+    var level = this.valueOf(); //this is the string passed in from template "fundamentals"
     if (Meteor.user()) {
       if (Meteor.user().isSuperAdmin) {
-        return Meteor.users.find({isAdmin: {$not: true}, isSuperAdmin: {$not: true}}, {sort: {level: 1}});
+        return Meteor.users.find({isAdmin: {$not: true}, isSuperAdmin: {$not: true}, level: level }, {sort: {level: 1}});
       }
     }
   },
@@ -30,21 +34,18 @@ Template.allNonAdminUsers.helpers({
       return this.emails[0].address;
     }
   },
-  "completedAssignmentNames": function() {
+  "completed": function(assignmentId, user) {
     var completedAssignmentNames = [];
-    _.each(this.completed, function(assignment) {
-      if (assignment.assignmentType) {
-        completedAssignmentNames.push("Week " + assignment.weekNum + " "
-          + assignment.assignmentType.toProperCase());
-      }
+    userCompletedAssignmentIds = _.map(user.completed, function(assignment) {
+        return assignment._id;
     });
-    return completedAssignmentNames.join(", ");
-  },
-  "role": function() {
-    if (Permissions.isAdmin(this)) {
-      return "Admin";
+    if (_.contains(userCompletedAssignmentIds, assignmentId)) {
+      var thisAssignment = _.find(user.completed, function(completedAssignment) {
+        return completedAssignment._id === assignmentId;
+      });
+      return 100 * thisAssignment.result.numCorrect / thisAssignment.result.numTotal;
     } else {
-      return "Student";
+      return "Not Completed";
     }
   }
 });
