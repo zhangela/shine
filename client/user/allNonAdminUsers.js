@@ -12,19 +12,15 @@ Template.allNonAdminUsers.events({
 });
 
 Template.allNonAdminUsers.helpers({
-  "assignments": function(level) {
+  "assignments": function(usersToShow) {
+    var level = usersToShow.level;
     return Assignments.find({assignmentLevel: level}, {sort: {weekNum: 1, assignmentType: 1}});
   },
   "displayedAssignmentName": function() {
     return "Week " + this.weekNum + " " + this.assignmentType.toProperCase();
   },
-  "allNonAdminUsers": function() {
-    var level = this.valueOf(); //this is the string passed in from template "fundamentals"
-    if (Meteor.user()) {
-      if (Meteor.user().isSuperAdmin) {
-        return Meteor.users.find({isAdmin: {$not: true}, isSuperAdmin: {$not: true}, level: level }, {sort: {level: 1}});
-      }
-    }
+  "userIsCorrectLevel": function(usersToShow) {
+    return this.level === usersToShow.level;
   },
   "userIDToUser": function(userID) {
     return Meteor.users.findOne(userID);

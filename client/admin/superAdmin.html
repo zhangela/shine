@@ -1,9 +1,9 @@
 <template name="superAdmin">
   {{>allAdmins}}
-  {{#with "fundamentals"}}
+  {{#with usersToShow "fundamentals"}}
     {{>allNonAdminUsers}}
   {{/with}}
-  {{#with "expert"}}
+  {{#with usersToShow "expert"}}
     {{>allNonAdminUsers}}
   {{/with}}
   {{>assignmentResults}}

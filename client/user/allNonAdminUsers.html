@@ -1,0 +1,45 @@
+<template name="allNonAdminUsers">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{toProperCase this.level}} Students</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive tableContainer">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Level</th>
+              {{#each assignments this}}
+                <th>{{displayedAssignmentName}}</th>
+              {{/each}}
+              <th>Stars</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each this.users }} 
+            {{#with userIDToUser this}}
+            {{#if userIsCorrectLevel ../..}} <!-- XXX: Hacky. needed bc usergroup does not have level. -->
+              <tr>
+                <td>{{email}}</td> 
+                <td>{{level}}</td>
+                {{#each assignments ../../..}}
+                  <td>{{completed this._id ..}}</td>
+                {{/each}}
+                <td>{{stars}}</td>
+                <td><button class="addStarBtn btn btn-default btn-sm">
+                  Add Star</button></td>
+                {{#unless this.isSuperAdmin}}
+                  <td><a class="deleteBtn glyphicon glyphicon-remove text-danger delete" href="#"></a></td>
+                {{/unless}}
+              </tr>
+            {{/if}}
+            {{/with}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

@@ -12,5 +12,13 @@ Template.admin.helpers({
     if (user) {
       return user.emails[0].address;
     }
+  },
+  "usersToShow": function(level) {
+    var usersToShow = {};
+    usersToShow.level = level;
+    if (Meteor.user()) {
+      usersToShow.users = UserGroups.findOne({owner: Meteor.userId()}).users;
+    }
+    return usersToShow;
   }
 });
