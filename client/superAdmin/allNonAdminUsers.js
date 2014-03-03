@@ -1,4 +1,4 @@
-Template.allUsers.events({
+Template.allNonAdminUsers.events({
   "click .addStarBtn": function() {
     Meteor.call("addStarForUser", this._id);
   },
@@ -11,14 +11,14 @@ Template.allUsers.events({
   }
 });
 
-Template.allUsers.helpers({
+Template.allNonAdminUsers.helpers({
   "assignments": function() {
     return Assignments.find();
   },
-  "allUsers": function() {
+  "allNonAdminUsers": function() {
     if (Meteor.user()) {
       if (Meteor.user().isSuperAdmin) {
-        return Meteor.users.find();
+        return Meteor.users.find({isAdmin: {$not: true}, isSuperAdmin: {$not: true}}, {sort: {level: 1}});
       }
     }
   },

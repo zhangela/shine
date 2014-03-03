@@ -1,34 +1,23 @@
-<template name="allUsers">
+<template name="allAdmins">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Admins and Students</h3>
+      <h3 class="panel-title">Admins</h3>
     </div>
     <div class="panel-body">
       <table class="table">
         <thead>
           <tr>
             <th>Email</th>
-            <th>Role</th>
-            <th>Level</th>
-            <th>Completed Assignments</th>
-            <th>Grade</th>
-            <th>Stars</th>
-            <th></th>
+            <th>Group</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-        {{#each allUsers}} 
+        {{#each allAdmins}} 
           {{#with userIDToUser this}}
           <tr>
             <td>{{email}}</td> 
-            <td>{{role}}</td>
-            <td>{{level}}</td>
-            <td>{{completedAssignmentNames}}</td>
-            <td>To Be Implemented</td>
-            <td>{{stars}}</td>
-            <td><button class="addStarBtn btn btn-default btn-sm">
-              Add Star</button></td>
+            <td>View Group (to be implemented)</td>
             {{#unless this.isSuperAdmin}}
               <td><a class="deleteBtn glyphicon glyphicon-remove text-danger delete" href="#"></a></td>
             {{/unless}}
