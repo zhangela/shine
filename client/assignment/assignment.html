@@ -2,8 +2,10 @@
   {{#if completedByCurrentUser}}
     <h2>You have completed Week {{this.weekNum}} {{toProperCase this.assignmentType}}.</h2>
   {{else}}
-    <h2>Welcome to the Week {{this.weekNum}}
-      {{toProperCase this.assignmentType}}!</h2>
+    {{#isolate}}
+      <h2>Welcome to the Week {{this.weekNum}}
+        {{toProperCase this.assignmentType}}!</h2>
+    {{/isolate}}
 
     {{#isolate}}
       {{#if timerLength}}
@@ -11,9 +13,12 @@
       {{/if}}
     {{/isolate}}
     <span class="hidden assignmentID">{{this._id}}</span>
-    {{#each this.questions}}
-      {{> question questionObjFromID}}
-    {{/each}}
+
+    {{#isolate}}
+      {{#each this.questions}}
+        {{> question questionObjFromID}}
+      {{/each}}
+    {{/isolate}}
     <button type="submit" class="btn btn-default">Submit</button>
   {{/if}}
 </template>
