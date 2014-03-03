@@ -1,10 +1,12 @@
 Router.configure({
   layoutTemplate: 'layout',
+  loadingTemplate: 'loading',
   waitOn: function () {
     return [
       Meteor.subscribe("assignments"),
       Meteor.subscribe("userGroups"),
-      Meteor.subscribe("users")
+      Meteor.subscribe("userData"),
+      Meteor.subscribe("allUsersData")
     ];
   },
   before: triggerGoogleAnalytics

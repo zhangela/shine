@@ -19,6 +19,11 @@
         {{> question questionObjFromID}}
       {{/each}}
     {{/isolate}}
-    <button type="submit" class="btn btn-default">Submit</button>
+
+    {{# if this.questions}}
+      <button type="submit" class="btn btn-default">Submit</button>
+      <br>
+    {{/if}}
+
   {{/if}}
 </template>

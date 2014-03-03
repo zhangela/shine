@@ -42,7 +42,8 @@ Template.assignment.helpers({
     return Questions.findOne({_id: this.valueOf()});
   },
   "completedByCurrentUser": function() {
-    if (Meteor.user()) {
+    if (Meteor.userId()) {
+      console.log(JSON.stringify(Meteor.user().completed));
       var completedAssignments = _.map(Meteor.user().completed, function(test) {
         return test._id;
       });
