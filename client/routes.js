@@ -53,7 +53,7 @@ Router.map(function () {
     path: '/weeks/:weekNum/:assignmentType',
     template: 'assignment',
     data: function() {
-      if (Meteor.user()) {
+      if (Meteor.userId()) {
         return Assignments.findOne({
           weekNum: this.params.weekNum,
           assignmentType: this.params.assignmentType,
