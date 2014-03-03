@@ -80,7 +80,7 @@ Meteor.publish("userData", function () {
 
 Meteor.publish("allUsersData", function() {
     return Meteor.users.find({},
-        {fields: {'completed': 1, 'emails': 1, 'level': 1}});
+        {fields: {'completed': 1, 'emails': 1, 'level': 1, 'isAdmin': 1, 'isSuperAdmin': 1}});
 });
 
 Meteor.startup(function () {
