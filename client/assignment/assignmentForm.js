@@ -19,11 +19,11 @@ Template.assignmentForm.events({
       if (error) {
         alert("Error with saving assignment: " + error.reason);
       } else {
-        formObj.reset();
-        Session.set("assignmentType", null);
-
         if (Router.current().route.name === "editAssignment") {
           Router.go("editAssignment", newAssignment);
+        } else {
+          formObj.reset();
+          Session.set("assignmentType", null);
         }
       }
     });

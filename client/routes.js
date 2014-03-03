@@ -67,9 +67,9 @@ Router.map(function () {
     load: function () {
       Timer.resetTimer();
 
-      if (this.getData() && this.getData().timed) {
+      if (this.getData() && this.getData().timerLength) {
         var amplifyKey = Meteor.userId() + "/" +
-          this.params.weekNum + "/" + this.params.assignmentType;
+          this.getData()._id;
         var totalTime = parseInt(this.getData().timerLength, 10);
 
         Timer.startTimer(amplifyKey, totalTime);

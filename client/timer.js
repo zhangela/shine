@@ -10,6 +10,8 @@ var tick = function () {
 
 Timer = {
   startTimer: function (key, totalTime) {
+    clearInterval(timerInterval);
+
     var timeRemaining;
 
     if (! amplify.store(key)) {
@@ -27,6 +29,7 @@ Timer = {
     timerInterval = setInterval(tick, 1000);
   },
   resetTimer: function () {
+    clearInterval(timerInterval);
     Session.set("timer", undefined);
   },
   getTimer: function () {

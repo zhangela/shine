@@ -2,13 +2,14 @@ Template.assignment.rendered = function () {
   var assignment = this.data;
   var template = this;
 
-  if (assignment.timed) {
-    Deps.autorun(function () {
-      if (Session.get("timer") <= 0) {
+  Deps.autorun(function () {
+    if (Session.get("timer") <= 0) {
+      if (assignment.timerLength) {
+        console.log("clicking...");
         $(template.find("button")).click();
       }
-    });
-  }
+    }
+  });
 };
 
 Template.assignment.events({
@@ -21,7 +22,6 @@ Template.assignment.events({
     _.each(formObjs, function(formObj) {
       var formJson = FormUtils.serializeForm(formObj);
       answerArray.push(formJson);
-      formObj.reset();
     });
 
     var assignmentID = $(template.find(".assignmentID")).text();
@@ -31,6 +31,9 @@ Template.assignment.events({
       assignmentID,
       answerArray,
       function(error, result) {
+        if (error) {
+          alert("Error submitting answers: " + error.reason);
+        }
     });
   }
 });

@@ -4,12 +4,7 @@ Meteor.methods({
     if (! Permissions.isAdmin(Meteor.user())) {
       throw new Meteor.Error(403, "Need to be admin.");
     }
-
-    // XXX add validation
-    if (assignment.timerLength) {
-      assignment.timed = true;
-    }
-
+    
     if (assignment._id) { // if we are editing
       Assignments.update({_id: assignment._id}, {
         $set: _.omit(assignment, ["_id"])

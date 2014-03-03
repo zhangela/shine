@@ -30,7 +30,10 @@ Meteor.methods({
     };
 
     // make sure we can't submit twice
-    if(! Meteor.users.findOne({"completed._id": assignment._id})) {
+    if(! Meteor.users.findOne({
+      _id: this.userId,
+      "completed._id": assignment._id
+    })) {
       Meteor.users.update(
         {_id: this.userId},
         {
