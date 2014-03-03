@@ -1,4 +1,4 @@
-Template.manageAdmins.events({
+Template.addAdmin.events({
   "submit form": function (event, template) {
     event.preventDefault();
 
@@ -12,7 +12,7 @@ Template.manageAdmins.events({
   }
 });
 
-Template.manageAdmins.helpers({
+Template.addAdmin.helpers({
   admins: function () {
     return Meteor.users.find({isAdmin: true});
   },

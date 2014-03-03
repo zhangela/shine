@@ -1,10 +1,11 @@
 <template name="superAdmin">
-  {{>allAdmins}}
+  {{> addAdmin}}
+  {{> allAdmins}}
   {{#with usersToShow "fundamentals"}}
-    {{>allNonAdminUsers}}
+    {{> allNonAdminUsers}}
   {{/with}}
   {{#with usersToShow "expert"}}
-    {{>allNonAdminUsers}}
+    {{> allNonAdminUsers}}
   {{/with}}
-  {{>assignmentResults}}
+  {{> assignmentResults}}
 </template>
