@@ -5,7 +5,6 @@ Template.assignment.rendered = function () {
   Deps.autorun(function () {
     if (Session.get("timer") <= 0) {
       if (assignment.timerLength) {
-        console.log("clicking...");
         $(template.find("button")).click();
       }
     }
