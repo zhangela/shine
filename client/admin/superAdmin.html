@@ -1,11 +1,39 @@
 <template name="superAdmin">
-  {{> addAdmin}}
-  {{> allAdmins}}
-  {{#with usersToShow "fundamentals"}}
-    {{> allNonAdminUsers}}
-  {{/with}}
-  {{#with usersToShow "expert"}}
-    {{> allNonAdminUsers}}
-  {{/with}}
-  {{> assignmentResults}}
+
+  {{#if tabNameIsAdmins}}
+    <ul class="nav nav-tabs">
+      <li><a href="#" class="setTabNameToAssignments">Assignments</a></li>
+      <li class="setTabNameToUsers"><a href="#">Students</a></li>
+      <li class="active"><a href="#" class="setTabNameToAdmins">Admins</a></li>
+    </ul>
+    <br>
+    {{> addAdmin}}
+    {{> allAdmins}}
+  {{/if}}
+
+  {{#if tabNameIsUsers}}
+    <ul class="nav nav-tabs">
+      <li><a href="#" class="setTabNameToAssignments">Assignments</a></li>
+      <li class="active"><a href="#" class="setTabNameToUsers">Students</a></li>
+      <li class="setTabNameToAdmins"><a href="#">Admins</a></li>
+    </ul>
+    <br>
+    {{#with usersToShow "fundamentals"}}
+      {{> allNonAdminUsers}}
+    {{/with}}
+    {{#with usersToShow "expert"}}
+      {{> allNonAdminUsers}}
+    {{/with}}
+  {{/if}}
+
+  {{#if tabNameIsAssignments}}
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" class="setTabNameToAssignments">Assignments</a></li>
+      <li class="setTabNameToUsers"><a href="#">Students</a></li>
+      <li class="setTabNameToAdmins"><a href="#">Admins</a></li>
+    </ul>
+    <br>
+    {{> assignmentForm}}
+    {{> assignmentResults}}
+  {{/if}}
 </template>
