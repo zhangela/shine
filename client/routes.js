@@ -33,7 +33,7 @@ var mustBeLoggedIn = function () {
 };
 
 Router.before(checkForAdmin, {
-  only: ["admin", "editAssignment"]
+  only: ["admin", "superadmin", "editAssignment"]
 });
 
 Router.before(mustBeLoggedIn, {
@@ -83,13 +83,7 @@ Router.map(function () {
   
   this.route('admin', {
     path: 'admin',
-    template: 'admin',
-    before: function () {
-      if (!Meteor.user()) {
-        this.render('login');
-        this.stop();
-      }
-    }
+    template: 'admin'
   });
 
   this.route('editAssignment', {

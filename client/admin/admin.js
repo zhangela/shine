@@ -1,4 +1,7 @@
 Template.admin.helpers({
+  "tabNameIsUsers": function() {
+    return Session.get("adminTabName") === "users";
+  },
   "usersInUserGroup": function() {
     if (Meteor.userId()) {
       var userGroup = UserGroups.findOne({owner: Meteor.userId()});
@@ -22,3 +25,14 @@ Template.admin.helpers({
     return usersToShow;
   }
 });
+
+Template.admin.events({
+  "click .setTabNameToUsers": function() {
+    Session.set("adminTabName", "users");
+  },
+  "click .setTabNameToAssignments": function() {
+    Session.set("adminTabName", "assignments");
+  }
+});
+
+Session.setDefault("adminTabName", "assignments");

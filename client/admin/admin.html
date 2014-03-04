@@ -1,24 +1,31 @@
 <template name="admin">
-  
+
   {{#if currentUser.isSuperAdmin}}
     <a class="btn btn-default btn-primary btn-lg" href="{{pathFor 'superAdmin'}}">Super Admin Only</a>
     <br />
     <br />
   {{/if}}
 
-  <div class="row">
-    <div class="col-md-6">
-      {{> addUser}}
-      {{#with usersToShow "fundamentals"}}
-        {{> allNonAdminUsers}}
-      {{/with}}
-      {{#with usersToShow "expert"}}
-        {{> allNonAdminUsers}}
-      {{/with}}
-    </div>
-    <div class="col-md-6">
-      {{> assignmentForm}}
-      {{> assignments}}
-    </div>
-  </div>
+  {{#if tabNameIsUsers}}   <!-- displaying USERS -->
+    <ul class="nav nav-tabs">
+      <li><a href="#" class="setTabNameToAssignments">Assignments</a></li>
+      <li class="active setTabNameToUsers"><a href="#">Students</a></li>
+    </ul>
+    {{> addUser}}
+    {{#with usersToShow "fundamentals"}}
+      {{> allNonAdminUsers}}
+    {{/with}}
+    {{#with usersToShow "expert"}}
+      {{> allNonAdminUsers}}
+    {{/with}}
+
+  {{else }}   <!-- displaying ASSIGNMENTS -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" class="setTabNameToAssignments">Assignments</a></li>
+      <li><a href="#" class="setTabNameToUsers">Students</a></li>
+    </ul>
+    {{> assignmentForm}}
+    {{> assignments}}
+  {{/if}}
+
 </template>
