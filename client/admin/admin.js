@@ -23,6 +23,10 @@ Template.admin.helpers({
       usersToShow.users = UserGroups.findOne({owner: Meteor.userId()}).users;
     }
     return usersToShow;
+  },
+  "newAssignment": function () {
+    // empty assignment for new assignment form
+    return {};
   }
 });
 
