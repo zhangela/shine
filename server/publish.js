@@ -16,6 +16,12 @@ Meteor.publish("questions", function () {
   return Questions.find({});
 });
 
+Meteor.publish("savedAnswers", function () {
+  return SavedAnswers.find({
+    userId: this.userId
+  });
+});
+
 Meteor.publish("userGroups", function () {
   if (this.userId) {
     var currentUser = Meteor.users.find(this.userId);

@@ -16,31 +16,36 @@
         <div class="indent-small">
           <div class="radio">
             <label>
-              <input type="radio" name="answerOption" id="answerOptionA" value="answerOptionA">
+              <input type="radio" name="answerOption" id="answerOptionA"
+                value="answerOptionA" {{#if savedAnswerOption "A"}}checked{{/if}}>
               {{answerOptionA}}
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="answerOption" id="answerOptionB" value="answerOptionB">
+              <input type="radio" name="answerOption" id="answerOptionB"
+                value="answerOptionB" {{#if savedAnswerOption "B"}}checked{{/if}}>
               {{answerOptionB}}
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="answerOption" id="answerOptionC" value="answerOptionC">
+              <input type="radio" name="answerOption" id="answerOptionC"
+                value="answerOptionC" {{#if savedAnswerOption "C"}}checked{{/if}}>
               {{answerOptionC}}
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="answerOption" id="answerOptionD" value="answerOptionD">
+              <input type="radio" name="answerOption" id="answerOptionD"
+                value="answerOptionD" {{#if savedAnswerOption "D"}}checked{{/if}}>
               {{answerOptionD}}
             </label>
           </div>
         </div>
       {{else}}
-        <input type="text" class="form-control shortInput" name="answerText" placeholder="Your Answer"/>
+        <input type="text" class="form-control shortInput" name="answerText"
+          placeholder="Your Answer" value="{{savedAnswerText}}" />
       {{/if}}
     </div>
   </form>

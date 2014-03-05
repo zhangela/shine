@@ -124,6 +124,18 @@ Meteor.methods({
     Assignments.remove({_id: assignmentId});
   },
 
+  "saveAnswers": function (assignmentId, answerArray) {
+    var self = this;
+    _.each(answerArray, function (answer) {
+      SavedAnswers.upsert({
+        questionID: answer.questionID,
+        userId: self.userId
+      }, {
+        $set: answer
+      });
+    });
+  },
+
   "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {
     var correctAnswers = [];
     _.each(answerArray, function(answer) {

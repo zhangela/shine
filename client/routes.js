@@ -63,7 +63,10 @@ Router.map(function () {
       }
     },
     waitOn: function () {
-      Meteor.subscribe("questions");
+      return [
+        Meteor.subscribe("questions"),
+        Meteor.subscribe("savedAnswers")
+      ];
     },
     load: function () {
       Timer.resetTimer();

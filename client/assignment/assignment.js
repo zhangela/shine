@@ -11,6 +11,27 @@ Template.assignment.rendered = function () {
   });
 };
 
+var saveForm = function (event, template) {
+  var formObjs = template.findAll("form");
+  var answerArray = [];
+  _.each(formObjs, function(formObj) {
+    var formJson = FormUtils.serializeForm(formObj);
+    answerArray.push(formJson);
+  });
+
+  var assignmentID = $(template.find(".assignmentID")).text();
+
+  Meteor.call(
+    "saveAnswers",
+    assignmentID,
+    answerArray,
+    function(error, result) {
+      if (error) {
+        alert("Error saving answers: " + error.reason);
+      }
+  });
+};
+
 Template.assignment.events({
   "submit form": function(event) {
     event.preventDefault();
@@ -34,7 +55,9 @@ Template.assignment.events({
           alert("Error submitting answers: " + error.reason);
         }
     });
-  }
+  },
+  "keyup input": saveForm,
+  "change input": saveForm
 });
 
 Template.assignment.helpers({
