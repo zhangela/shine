@@ -1,3 +1,9 @@
+var triggerGoogleAnalytics = function () {
+  if (window.ga) {
+    ga('send', 'pageview', window.location.origin + window.location.hash);
+  }
+};
+
 Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
@@ -11,12 +17,6 @@ Router.configure({
   },
   before: triggerGoogleAnalytics
 });
-
-var triggerGoogleAnalytics = function () {
-  if (window.ga) {
-    ga('send', 'pageview', window.location.origin + window.location.hash);
-  }
-};
 
 var checkForAdmin = function () {
   if (! Permissions.isAdmin(Meteor.user())) {
