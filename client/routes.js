@@ -36,9 +36,7 @@ Router.before(checkForAdmin, {
   only: ["admin", "superadmin", "editAssignment"]
 });
 
-Router.before(mustBeLoggedIn, {
-  except: ['home']
-});
+Router.before(mustBeLoggedIn);
 
 Router.map(function () {
   /**

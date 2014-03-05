@@ -4,11 +4,7 @@
 </head>
 
 <body>
-
   {{> menu}}
-  {{#unless loggingIn}}
-    {{> layout}}
-  {{/unless}}
 
   <div id="footer">
     <div class="container">
@@ -20,7 +16,7 @@
 </body>
 
 <template name="layout">
-    <div class="container">
-      {{yield}}
-    </div>
+  <div class="container">
+    {{yield}}
+  </div>
 </template>

@@ -1,16 +1,16 @@
 <template name="home">
-    {{#if currentUser}}
-      {{#if currentUserIsAdmin}}
-        {{>admin}}
-      {{else}}
-        <h3>Diagnostic Test</h3>
-        <p>The Diagnostic test is designed to only take you ~25 minute to complete. Don't stress, we just want to get a sense of your strengths and weaknesses. If you don't know how to solve a problem, just leave it blank. You are not being scored. Please complete the test on your own.</p>
-        <a href="/weeks/0/diagnostic" class="btn btn-default">Click to Start</a>
-      {{/if}}
+  {{#if currentUser}}
+    {{#if currentUserIsAdmin}}
+      {{>admin}}
     {{else}}
-      <div class="fullWidth">
-        <h4 style="text-align: center;">Please sign in.</h4>
-        <img class="centered" src="http://www.shineforgirls.org/assets/icon-d41458f945de2d3c0341e1d265362ee4.png"></img>
-      </div>
+      <h3>Diagnostic Test</h3>
+      <p>The Diagnostic test is designed to only take you ~25 minute to complete. Don't stress, we just want to get a sense of your strengths and weaknesses. If you don't know how to solve a problem, just leave it blank. You are not being scored. Please complete the test on your own.</p>
+      <a href="/weeks/0/diagnostic" class="btn btn-default">Click to Start</a>
     {{/if}}
+  {{else}}
+    <div class="fullWidth">
+      <h4 style="text-align: center;">Please sign in.</h4>
+      <img class="centered" src="http://www.shineforgirls.org/assets/icon-d41458f945de2d3c0341e1d265362ee4.png"></img>
+    </div>
+  {{/if}}
 </template>
