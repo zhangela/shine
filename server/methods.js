@@ -122,5 +122,78 @@ Meteor.methods({
     }
 
     Assignments.remove({_id: assignmentId});
+  },
+
+  "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {
+    var correctAnswers = [];
+    _.each(answerArray, function(answer) {
+      var questionObj = Questions.findOne(answer.questionID);
+      if (questionObj.questionType === 'Multiple Choice') {
+        if (questionObj.answerCorrectOption === answer.answerOption) {
+          correctAnswers.push(answer.questionID);
+        }
+      } else {
+        var correctAnswer = parseFloat(questionObj.answerCorrectNumeric);
+        var userAnswer = parseFloat(answer.answerText);
+
+        var answerDifference = Math.abs(correctAnswer - userAnswer);
+        var fractionOfCorrect = Math.abs(correctAnswer)/100;
+
+        // within a 1% margin
+        if (answerDifference < fractionOfCorrect) {
+          correctAnswers.push(answer.questionID);
+        }
+      }
+    });
+
+    var assignment = Assignments.findOne(assignmentID);
+    var assignmentResult = {
+      assignmentID: assignmentID,
+      numCorrect: correctAnswers.length,
+      numTotal: assignment.questions.length,
+      correctAnswers: correctAnswers
+    };
+
+    // make sure we can't submit twice
+    if(! Meteor.users.findOne({
+      _id: this.userId,
+      "completed._id": assignment._id
+    })) {
+      Meteor.users.update(
+        {_id: this.userId},
+        {
+          $push: {
+            completed: {
+              _id: assignment._id,
+              weekNum: assignment.weekNum,
+              assignmentType: assignment.assignmentType,
+              result: assignmentResult
+            }
+          }
+        }
+      );
+    }
+  },
+  "addStarForUser": function(userId) {
+    Meteor.users.update({_id: userId}, {$inc: {stars: 1}});
+  },
+
+  "addNewUser": function (user) {
+    var userID;
+    var existingUser = Meteor.users.findOne({"emails.address": user.email});
+    
+    if (existingUser) {
+      userID = existingUser._id;
+    } else {
+      userID = Accounts.createUser(user);
+    }
+
+    Meteor.users.update({_id: userID}, {$set: {level: user.level}});
+
+    var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
+    UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});
+  },
+  "deleteUser": function(userID) {
+    Meteor.users.remove({_id: userID});
   }
 });
