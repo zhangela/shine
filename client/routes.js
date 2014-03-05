@@ -46,7 +46,8 @@ Router.map(function () {
    */
   this.route('home', {
     path: '/',
-    template: 'home'
+    template: 'home',
+    layoutTemplate: null
   });
 
   this.route('assignment', {
