@@ -7,10 +7,12 @@ Template.question.helpers({
     return question.questionType === 'Multiple Choice';
   },
   "savedAnswerText": function() {
-    return SavedAnswers.findOne({
+    var savedAnswer = SavedAnswers.findOne({
       userId: Meteor.userId(),
       questionID: this._id
-    }).answerText;
+    });
+
+    return savedAnswer && savedAnswer.answerText;
   },
   "savedAnswerOption": function(option) {
     var savedAnswer = SavedAnswers.findOne({
