@@ -19,7 +19,7 @@ Template.admin.helpers({
   "usersToShow": function(level) {
     var usersToShow = {};
     usersToShow.level = level;
-    if (Meteor.user()) {
+    if (Meteor.user() && UserGroups.findOne({owner: Meteor.userId()})) {
       usersToShow.users = UserGroups.findOne({owner: Meteor.userId()}).users;
     }
     return usersToShow;
