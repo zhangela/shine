@@ -13,9 +13,12 @@ Template.question.helpers({
     }).answerText;
   },
   "savedAnswerOption": function(option) {
-    return SavedAnswers.findOne({
+    var savedAnswer = SavedAnswers.findOne({
       userId: Meteor.userId(),
       questionID: this._id
-    }).answerOption === "answerOption" + option;
+    });
+
+    return savedAnswer &&
+      (savedAnswer.answerOption === "answerOption" + option);
   }
 });
