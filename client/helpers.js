@@ -2,6 +2,10 @@ Handlebars.registerHelper("log", function(context) {
   return console.log(context);
 });
 
+Handlebars.registerHelper("assignmentDisplayName", function(assignment) {
+  return "Week " + assignment.weekNum + " " + assignment.assignmentType.toProperCase();
+});
+
 Handlebars.registerHelper("assignmentResult", function(user, assignmentName) {
       var testResult = _.find(user.completed, function(assignment) {
         return assignment.name === assignmentName;

@@ -124,6 +124,20 @@ Meteor.methods({
     Assignments.remove({_id: assignmentId});
   },
 
+  publishAssignment: function (assignmentId) {
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+    Assignments.update({_id: assignmentId}, {$set: {isPublished: true}});
+  },
+
+  unpublishAssignment: function(assignmentId) {
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+    Assignments.update({_id: assignmentId}, {$set: {isPublished: false}});
+  },
+
   "saveAnswers": function (assignmentId, answerArray) {
     var self = this;
     _.each(answerArray, function (answer) {

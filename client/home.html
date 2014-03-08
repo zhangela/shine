@@ -4,9 +4,17 @@
       {{#if currentUserIsAdmin}}
         {{> admin}}
       {{else}}
-        <h3>Diagnostic Test</h3>
-        <p>The Diagnostic test is designed to only take you ~25 minute to complete. Don't stress, we just want to get a sense of your strengths and weaknesses. If you don't know how to solve a problem, just leave it blank. You are not being scored. Please complete the test on your own.</p>
-        <a href="/weeks/0/diagnostic" class="btn btn-default">Click to Start</a>
+
+        {{#each assignments}}
+          <div>
+            <h3>{{assignmentDisplayName this}}</h3>
+            {{#if isDiagnostic this}}
+              <p>The Diagnostic test is designed to only take you ~25 minute to complete. Don't stress, we just want to get a sense of your strengths and weaknesses. If you don't know how to solve a problem, just leave it blank. You are not being scored. Please complete the test on your own.</p>
+            {{/if}}
+            <a href="{{pathFor 'assignment'}}" class="btn btn-default">View Assignment</a>
+          </div>
+          <br>
+        {{/each}}
       {{/if}}
     </div>
   {{else}}
