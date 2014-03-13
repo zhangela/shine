@@ -140,14 +140,20 @@ Meteor.methods({
 
   "saveAnswers": function (assignmentId, answerArray) {
     var self = this;
-    _.each(answerArray, function (answer) {
-      SavedAnswers.upsert({
-        questionID: answer.questionID,
-        userId: self.userId
-      }, {
-        $set: answer
+
+    if (! Utils.assignmentCompletedByUser(Meteor.user())) {
+      _.each(answerArray, function (answer) {
+        SavedAnswers.upsert({
+          questionID: answer.questionID,
+          userId: self.userId
+        }, {
+          $set: answer
+        });
       });
-    });
+    } else {
+      throw new Meteor.Error("unauthorized",
+        "Can't change answers for a submitted assignment.");
+    }
   },
 
   "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {

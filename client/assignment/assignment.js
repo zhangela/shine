@@ -36,7 +36,7 @@ Template.assignment.events({
   "submit form": function(event) {
     event.preventDefault();
   },
-  "click button": function(event, template) {
+  "click button.submit": function(event, template) {
     var formObjs = template.findAll("form");
     var answerArray = [];
     _.each(formObjs, function(formObj) {
@@ -65,13 +65,7 @@ Template.assignment.helpers({
     return Questions.findOne({_id: this.valueOf()});
   },
   "completedByCurrentUser": function() {
-    if (Meteor.userId()) {
-      console.log(JSON.stringify(Meteor.user().completed));
-      var completedAssignments = _.map(Meteor.user().completed, function(test) {
-        return test._id;
-      });
-      return _.contains(completedAssignments, this._id);
-    }
+    return Utils.assignmentCompletedByUser(this, Meteor.user());
   },
   "currentAssignmentScore": function(assignmentName) {
     if (Meteor.user()) {
