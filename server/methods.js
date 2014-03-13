@@ -160,21 +160,8 @@ Meteor.methods({
     var correctAnswers = [];
     _.each(answerArray, function(answer) {
       var questionObj = Questions.findOne(answer.questionID);
-      if (questionObj.questionType === 'Multiple Choice') {
-        if (questionObj.answerCorrectOption === answer.answerOption) {
-          correctAnswers.push(answer.questionID);
-        }
-      } else {
-        var correctAnswer = parseFloat(questionObj.answerCorrectNumeric);
-        var userAnswer = parseFloat(answer.answerText);
-
-        var answerDifference = Math.abs(correctAnswer - userAnswer);
-        var fractionOfCorrect = Math.abs(correctAnswer)/100;
-
-        // within a 1% margin
-        if (answerDifference < fractionOfCorrect) {
-          correctAnswers.push(answer.questionID);
-        }
+      if (Utils.answerCorrectForQuestion(answer, questionObj)) {
+        correctAnswers.push(answer.questionID);
       }
     });
 

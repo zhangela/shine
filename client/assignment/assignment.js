@@ -37,6 +37,8 @@ Template.assignment.events({
     event.preventDefault();
   },
   "click button.submit": function(event, template) {
+    saveForm(event, template);
+
     var formObjs = template.findAll("form");
     var answerArray = [];
     _.each(formObjs, function(formObj) {

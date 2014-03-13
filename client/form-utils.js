@@ -63,11 +63,13 @@ FormUtils = {
           return name[name.length - 1] === "]" && name.indexOf("[") !== -1;
         };
 
-        var isRadioOrCheckbox = function (el) {
-          return el.type === "radio" || el.type === "checkbox";
-        };
+        var value = el.value;
 
-        if (!isRadioOrCheckbox(el) || el.checked) {
+        if (el.type === "checkbox") {
+          value = el.checked;
+        }
+
+        if (!(el.type === "radio") || el.checked) {
           // this code works with name[0] or name[], it just gets rid of
           // everything in brackets
           if (isListAttribute(attrName)) {
@@ -76,17 +78,19 @@ FormUtils = {
 
             // if the array exists, push the value, if not create an array
             if (node[attrName]) {
-              node[attrName].push(el.value);
+              node[attrName].push(value);
             } else {
-              node[attrName] = [el.value];
+              node[attrName] = [value];
             }
           } else {
             // if the attribute isn't an array, just set the value
-            node[attrName] = el.value;
+            node[attrName] = value;
           }
         }
       }
     });
+
+    console.log(root);
 
     // return the resulting tree after iterating over the whole form
     return root;

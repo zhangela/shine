@@ -1,0 +1,44 @@
+<template name="answeredQuestion">
+  <hr />
+  <div class="row">
+    <div class="col-md-1 question-correctness">
+      {{#if correct}}
+        <span class="label label-success">
+          <span class="glyphicon glyphicon-ok"></span>
+        </span>
+      {{else}}
+        <span class="label label-danger">
+          <span class="glyphicon glyphicon-remove"></span>
+        </span>
+      {{/if}}
+    </div>
+    <div class="col-md-11">
+      <label for="questionText">{{questionText}}</label>
+      <br /><br />
+      {{#if uploadedImage}}
+        <div>
+          <a href="{{uploadedImage}}" target="_blank">
+            <img src="{{uploadedImage}}" style="width: 75%;" />
+          </a>
+        </div>
+        <br>
+      {{/if}}
+      <input type="hidden" name="questionID" value="{{_id}}">
+
+      {{#if isMultipleChoice this}}
+        <ol type="A">
+          <li>{{answerOptionA}}</li>
+          <li>{{answerOptionB}}</li>
+          <li>{{answerOptionC}}</li>
+          <li>{{answerOptionD}}</li>
+        </ol>
+
+        <p>You answered: {{savedAnswerOption}}</p>
+        <p>The correct answer was: {{answerCorrectOption}}</p>
+      {{else}}
+        <p>You answered: {{savedAnswerText}}</p>
+        <p>The correct answer was: {{answerCorrectNumeric}}</p>
+      {{/if}}
+    </div>
+  </div>
+</template>

@@ -26,7 +26,7 @@ Template.admin.helpers({
   },
   "newAssignment": function () {
     // empty assignment for new assignment form
-    return {};
+    return {showResults: true};
   }
 });
 
