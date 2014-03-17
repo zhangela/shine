@@ -69,11 +69,14 @@ Template.assignment.helpers({
   "completedByCurrentUser": function() {
     return Utils.assignmentCompletedByUser(this, Meteor.user());
   },
-  "currentAssignmentScore": function(assignmentName) {
+  "currentAssignmentScore": function() {
+    var self = this;
+
     if (Meteor.user()) {
-      var testResult = _.find(Meteor.user().completed, function(test) {
-        return test.name === assignmentName;
+      var testResult = _.find(Meteor.user().completed, function(assignment) {
+        return assignment._id === self._id;
       });
+      
       return testResult.result.numCorrect / testResult.result.numTotal * 100;
     }
   },

@@ -3,6 +3,8 @@
     <h2>You have completed Week {{this.weekNum}}
       {{toProperCase this.assignmentType}}.</h2>
 
+    <h4>You earned {{currentAssignmentScore}}% on this assignment.</h4>
+
     {{#if showResults}}
       {{#isolate}}
         {{#each this.questions}}
