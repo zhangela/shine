@@ -156,6 +156,23 @@ Meteor.methods({
     }
   },
 
+  "adminUpdateStudentAnswers": function (assignmentId, answerArray, userId) {
+    var self = this;
+
+    if (! Permissions.isAdmin(Meteor.user())) {
+      throw new Meteor.Error(403, "Need to be admin.");
+    }
+
+    _.each(answerArray, function (answer) {
+      SavedAnswers.upsert({
+        questionID: answer.questionID,
+        userId: userId
+      }, {
+        $set: answer
+      });
+    });
+  },
+
   "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {
     var correctAnswers = [];
     _.each(answerArray, function(answer) {

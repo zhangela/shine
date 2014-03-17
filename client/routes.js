@@ -105,6 +105,47 @@ Router.map(function () {
     }
   });
 
+  this.route('editUser', {
+    path: 'admin/users/:_id',
+    template: 'editUser',
+    data: function() {
+      var user = Meteor.users.findOne({
+        _id: this.params._id
+      });
+      return user;
+    }
+  });
+
+  this.route('editStudentAssignment', {
+    path: 'admin/users/:userId/:assignmentId',
+    template: 'editStudentAssignment',
+    data: function() {
+      Session.set("idOfAdminPretendingToBeUser", this.params.userId);
+
+      var assignment = Assignments.findOne({_id: this.params.assignmentId});
+      if (assignment) {
+        var savedAnswers = SavedAnswers.find({
+          questionID: {$in: assignment.questions},
+          userId: this.params.userId
+          }, {sort: {_id: 1}});
+        return {
+          userId: this.params.userId,
+          assignment: assignment,
+          savedAnswers: savedAnswers
+        };
+      }
+    },
+    waitOn: function() {
+      return [
+        Meteor.subscribe("questions"),
+        Meteor.subscribe("savedAnswersForAllUsers")
+      ];
+    },
+    unload: function () {
+      Session.set("idOfAdminPretendingToBeUser", undefined);
+    }
+  });
+
   //SUPER ADMIN ACCESS ONLY
 
   this.route('superAdmin', {

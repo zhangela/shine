@@ -32,6 +32,15 @@ Handlebars.registerHelper("equals", function (a, b) {
   return a === b;
 });
 
+Handlebars.registerHelper("email", function(user) {
+  if (user.emails) {
+    return user.emails[0].address;
+  }
+});
+
+Handlebars.registerHelper("questionObjFromID", function(questionId) {
+  return Questions.findOne({_id: questionId});
+});
 
 $(function() {
   filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");

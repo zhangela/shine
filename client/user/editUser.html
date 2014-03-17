@@ -1,0 +1,12 @@
+<template name="editUser">
+  {{#each assignments}}
+    <div>
+      <h3>{{assignmentDisplayName this}}</h3>
+      {{#with linkparams userId=../this._id assignmentId=this._id}}
+      {{log this}}
+      <a href="{{pathFor 'editStudentAssignment'}}" class="btn btn-default">View Assignment</a>
+      {{/with}}
+    </div>
+    <br>
+  {{/each}}
+</template>

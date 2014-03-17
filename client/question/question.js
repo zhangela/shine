@@ -4,7 +4,7 @@ Template.question.helpers({
   },
   "savedAnswerText": function() {
     var savedAnswer = SavedAnswers.findOne({
-      userId: Meteor.userId(),
+      userId: Session.get("idOfAdminPretendingToBeUser") || Meteor.userId(),
       questionID: this._id
     });
 
@@ -12,7 +12,7 @@ Template.question.helpers({
   },
   "savedAnswerOption": function(option) {
     var savedAnswer = SavedAnswers.findOne({
-      userId: Meteor.userId(),
+      userId: Session.get("idOfAdminPretendingToBeUser") || Meteor.userId(),
       questionID: this._id
     });
 

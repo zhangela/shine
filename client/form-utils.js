@@ -90,8 +90,6 @@ FormUtils = {
       }
     });
 
-    console.log(root);
-
     // return the resulting tree after iterating over the whole form
     return root;
   }

@@ -22,6 +22,10 @@ Meteor.publish("savedAnswers", function () {
   });
 });
 
+Meteor.publish("savedAnswersForAllUsers", function() {
+  return SavedAnswers.find({});
+});
+
 Meteor.publish("userGroups", function () {
   if (this.userId) {
     var currentUser = Meteor.users.find(this.userId);
