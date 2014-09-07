@@ -51,7 +51,6 @@ Template.assignment.events({
     Meteor.call(
       "updateCompletedAssignmentsForUser",
       assignmentID,
-      answerArray,
       function(error, result) {
         if (error) {
           alert("Error submitting answers: " + error.reason);
