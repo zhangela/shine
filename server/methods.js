@@ -145,7 +145,8 @@ Meteor.methods({
       _.each(answerArray, function (answer) {
         SavedAnswers.upsert({
           questionID: answer.questionID,
-          userId: self.userId
+          userId: self.userId,
+          assignmentId: assignmentId
         }, {
           $set: answer
         });
@@ -171,11 +172,29 @@ Meteor.methods({
         $set: answer
       });
     });
+
+    Meteor.call("updateCompletedAssignmentsForUser", assignmentId, userId);
   },
 
-  "updateCompletedAssignmentsForUser": function(assignmentID, answerArray) {
+  "updateCompletedAssignmentsForUser": function(assignmentID, userId) {
+    var self = this;
+
+    if (! userId) {
+      // admin can resubmit other people's stuff
+      if (! Permissions.isAdmin(Meteor.user())) {
+        throw new Meteor.Error(403, "Need to be admin.");
+      }
+
+      userId = self.userId;
+    }
+
+    var answerCursor = SavedAnswers.find({
+      assignmentId: assignmentID,
+      userId: userId
+    });
+
     var correctAnswers = [];
-    _.each(answerArray, function(answer) {
+    answerCursor.forEach(function(answer) {
       var questionObj = Questions.findOne(answer.questionID);
       if (Utils.answerCorrectForQuestion(answer, questionObj)) {
         correctAnswers.push(answer.questionID);
@@ -192,14 +211,34 @@ Meteor.methods({
 
     // make sure we can't submit twice
     if(! Meteor.users.findOne({
-      _id: this.userId,
+      _id: userId,
       "completed._id": assignment._id
     })) {
       Meteor.users.update(
-        {_id: this.userId},
+        {_id: userId},
         {
           $push: {
             completed: {
+              _id: assignment._id,
+              weekNum: assignment.weekNum,
+              assignmentType: assignment.assignmentType,
+              result: assignmentResult
+            }
+          }
+        }
+      );
+    } else {
+      // admin can resubmit other people's stuff
+      if (! Permissions.isAdmin(Meteor.user())) {
+        throw new Meteor.Error(403, "Need to be admin.");
+      }
+
+      Meteor.users.update({
+          _id: userId,
+          "completed._id": assignment._id
+        }, {
+          $set: {
+            "completed.$": {
               _id: assignment._id,
               weekNum: assignment.weekNum,
               assignmentType: assignment.assignmentType,
