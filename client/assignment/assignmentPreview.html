@@ -1,24 +1,25 @@
 <template name="assignmentPreview">
   <div class="panel panel-default">
-  <div class="panel-heading">
-    <h2 class="panel-title">Week {{this.weekNum}} {{toProperCase this.assignmentType}} Questions</h2>
-  </div>
-  <div class="panel-body">
-    <span class="hidden assignmentID">{{this._id}}</span>
-    {{#if this.questions}}
-      {{#each this.questions}}
-        <div class="row">
-          <div class="col-sm-11">
-            {{> question questionObjFromID}}
+    <div class="panel-heading">
+      <h2 class="panel-title">Week {{this.weekNum}} {{toProperCase this.assignmentType}} Questions</h2>
+    </div>
+    <div class="panel-body">
+      <span class="hidden assignmentID">{{this._id}}</span>
+      {{#if this.questions}}
+        {{#each this.questions}}
+          <div class="row">
+            <div class="col-sm-11">
+              {{> question questionObjFromID}}
+            </div>
+            <div class="col-sm-1">
+              <a class="deleteBtn glyphicon glyphicon-remove text-danger delete"
+                href="#"></a>
+            </div>
           </div>
-          <div class="col-sm-1">
-            <a class="deleteBtn glyphicon glyphicon-remove text-danger delete"
-              href="#"></a>
-          </div>
-        </div>
-      {{/each}}
-    {{else}}
-      <p>This assignment doesn't have any questions right now.</p>
-    {{/if}}
+        {{/each}}
+      {{else}}
+        <p>This assignment doesn't have any questions right now.</p>
+      {{/if}}
+    </div>
   </div>
 </template>

@@ -18,5 +18,16 @@ Template.question.helpers({
 
     return savedAnswer &&
       (savedAnswer.answerOption === "answerOption" + option);
+  },
+  checkedIfOption: function (option) {
+    var savedAnswer = SavedAnswers.findOne({
+      userId: Session.get("idOfAdminPretendingToBeUser") || Meteor.userId(),
+      questionID: this._id
+    });
+
+    if(savedAnswer &&
+      (savedAnswer.answerOption === "answerOption" + option)) {
+      return {checked: "true"};
+    }
   }
 });

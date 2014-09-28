@@ -3,10 +3,6 @@
   margin-left: 20px;
 }
 
-#login-dropdown-list {
-  width: 250px;
-}
-
 .accounts-dialog input {
   width: 70%;
 }
@@ -43,7 +39,6 @@
   padding-top: 80px;
   position: absolute;
   z-index: -1;
-  background: url(http://www.shineforgirls.org/assets/bg2.jpg) no-repeat;
   background-size: cover;
   text-align: center;
   color: white;

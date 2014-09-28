@@ -3,7 +3,6 @@
   <h3>Assignment: {{assignmentDisplayName this.assignment}}</h3>
   <span class="hidden assignmentID">{{this.assignment._id}}</span>
 
-  {{#isolate}}
   {{#each this.savedAnswers}}
   <div>
     {{#with questionObj}}
@@ -11,5 +10,4 @@
     {{/with}}
   </div>
   {{/each}}
-{{/isolate}}
 </template>

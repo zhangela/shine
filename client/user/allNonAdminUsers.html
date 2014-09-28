@@ -23,7 +23,7 @@
             {{#with userIDToUser this}}
             {{#if userIsCorrectLevel ../..}} <!-- XXX: Hacky. needed bc usergroup does not have level. -->
               <tr>
-                <td><a href="{{pathFor 'editUser'}}">{{email}}</td> 
+                <td><a href="{{pathFor 'editUser'}}">{{email}}</a></td> 
                 <td>{{level}}</td>
                 {{#each assignments ../../..}}
                   <td>{{completed this._id ..}}</td>
@@ -38,8 +38,9 @@
             {{/if}}
             {{/with}}
           {{/each}}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

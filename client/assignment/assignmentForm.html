@@ -27,27 +27,37 @@
           <div class="col-sm-8">
             <select name="assignmentType" class="form-control">
               <option>Exercise</option>
-              <option {{#if equals assignmentType "homework"}}selected{{/if}}>
-                Homework</option>
-              <option {{#if equals assignmentType "challenge"}}selected{{/if}}>
-                Challenge</option>
-              <option {{#if isTypeOther}}selected{{/if}}>Other</option>
+              {{#if equals assignmentType "homework"}}
+                <option selected>Homework</option>
+              {{else}}
+                <option>Homework</option>
+              {{/if}}>
+                
+              {{#if equals assignmentType "challenge"}}
+                <option selected>Challenge</option>
+              {{else}}
+                <option>Challenge</option>
+              {{/if}}>
+
+              {{#if isTypeOther}}
+                <option selected>Other</option>
+              {{else}}
+                <option>Other</option>
+              {{/if}}
             </select>
           </div>
         </div>
 
-        {{#isolate }}
-          {{#if isTypeOther}}
-            <div class="form-group">
-              <label for="assignmentTypeCustomName" class="col-sm-4 control-label">Name of Assignment</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control"
-                name="assignmentTypeCustomName" placeholder="e.g. Diagnostic"
-                value="{{assignmentTypeCustomName}}">
-              </div>
+        {{#if isTypeOther}}
+          <div class="form-group">
+            <label for="assignmentTypeCustomName" class="col-sm-4 control-label">Name of Assignment</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control"
+              name="assignmentTypeCustomName" placeholder="e.g. Diagnostic"
+              value="{{assignmentTypeCustomName}}">
             </div>
-          {{/if}}
-        {{/isolate}}
+          </div>
+        {{/if}}
 
         <div class="form-group">
           <label for="assignmentLevel" class="col-sm-4 control-label">
@@ -55,9 +65,11 @@
           <div class="col-sm-8">
             <select name="assignmentLevel" class="form-control">
               <option value="fundamentals">Fundamentals</option>
-              <option value="expert"
-                {{#if equals assignmentLevel "expert"}}selected{{/if}}>
-                  Expert</option>
+              {{#if equals assignmentLevel "expert"}}
+                <option value="expert" selected>Expert</option>
+              {{else}}
+                <option value="expert">Expert</option>
+              {{/if}}
             </select>
           </div>      
         </div>
@@ -76,8 +88,11 @@
           <div class="col-sm-8 col-sm-offset-4">
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="showResults"
-                  {{#if showResults}}checked{{/if}}>
+                {{#if showResults}}
+                  <input type="checkbox" name="showResults" checked>
+                {{else}}
+                  <input type="checkbox" name="showResults">
+                {{/if}}
                 Show Results After Completion
               </label>
             </div>

@@ -15,7 +15,7 @@ Router.configure({
       Meteor.subscribe("allUsersData")
     ];
   },
-  before: triggerGoogleAnalytics
+  onBeforeAction: triggerGoogleAnalytics
 });
 
 var checkForAdmin = function () {
@@ -32,11 +32,11 @@ var mustBeLoggedIn = function () {
   }
 };
 
-Router.before(checkForAdmin, {
+Router.onBeforeAction(checkForAdmin, {
   only: ["admin", "superadmin", "editAssignment"]
 });
 
-Router.before(mustBeLoggedIn);
+Router.onBeforeAction(mustBeLoggedIn);
 
 Router.map(function () {
   /**
@@ -68,7 +68,7 @@ Router.map(function () {
         Meteor.subscribe("savedAnswers")
       ];
     },
-    load: function () {
+    onRun: function () {
       Timer.resetTimer();
 
       if (this.getData() && this.getData().timerLength) {
@@ -141,7 +141,7 @@ Router.map(function () {
         Meteor.subscribe("savedAnswersForAllUsers")
       ];
     },
-    unload: function () {
+    onStop: function () {
       Session.set("idOfAdminPretendingToBeUser", undefined);
     }
   });
@@ -151,7 +151,7 @@ Router.map(function () {
   this.route('superAdmin', {
     path: 'admin/super',
     template: 'superAdmin',
-    before: function () {
+    onBeforeAction: function () {
       if (!Meteor.user() || !Meteor.user().isSuperAdmin) {
         // stop the rest of the before hooks and the action function 
         this.stop();

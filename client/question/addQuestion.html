@@ -23,7 +23,6 @@
           </div>
         </div>
 
-        {{#isolate }}
         <div class="form-group">
           <label for="questionLabel" class="col-sm-4 control-label">Image</label>
           <div class="col-sm-8">
@@ -35,12 +34,9 @@
               </div>
               <input type="hidden" name="uploadedImage" value="{{uploadedImage}}"/>
             {{/if}}
-            </div>
           </div>
         </div>
-        {{/isolate}}
 
-        {{#isolate }}
         {{#unless isMultipleChoice}}
           <div class="form-group">
             <label for="answerCorrectNumeric" class="col-sm-4 control-label">Correct Answer*</label>
@@ -90,7 +86,7 @@
             </div>
           </div>
         {{/unless}}
-        {{/isolate}}
+
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
             <button type="submit" class="submitBtn btn btn-default">Create Question</button>
