@@ -6,10 +6,7 @@ var triggerGoogleAnalytics = function () {
 
 Tracker.autorun(function () {
   Meteor.userId();
-  Meteor.subscribe("assignments");
-  Meteor.subscribe("userGroups");
   Meteor.subscribe("userData");
-  Meteor.subscribe("allUsersData");
 });
 
 // iron router sucks
@@ -19,7 +16,7 @@ Router.go = function () {
   oldGo.apply(Router, arguments);
 
   // iron router didn't work
-  if (window.location.pathname === oldLocation) {
+  if (oldLocation !== arguments[0] && window.location.pathname === oldLocation) {
     window.location = arguments[0];
   }
 };
@@ -27,7 +24,14 @@ Router.go = function () {
 Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
-  onBeforeAction: triggerGoogleAnalytics
+  onBeforeAction: triggerGoogleAnalytics,
+  waitOn: function () {
+    return [
+      Meteor.subscribe("assignments"),
+      Meteor.subscribe("userGroups"),
+      Meteor.subscribe("allUsersData")
+    ];
+  }
 });
 
 var checkForAdmin = function () {

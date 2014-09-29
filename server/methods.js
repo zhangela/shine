@@ -291,5 +291,11 @@ Meteor.methods({
   },
   "deleteUser": function(userID) {
     Meteor.users.remove({_id: userID});
+  },
+  "changeMentor": function (studentId, newMentorId) {
+    // remove user from all previous groups
+    UserGroups.update({users: studentId},
+      {$pull: {users: studentId}}, {multi: true});
+    UserGroups.update({owner: newMentorId}, {$push: {users: studentId}});
   }
 });

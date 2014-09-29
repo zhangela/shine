@@ -37,12 +37,14 @@ Meteor.publish("savedAnswersForAllUsers", function() {
 
 Meteor.publish("userGroups", function () {
   if (this.userId) {
-    var currentUser = Meteor.users.find(this.userId);
+    var currentUser = Meteor.users.findOne(this.userId);
 
     if (Permissions.isAdmin(currentUser)) {
       // admin can see all user groups
+      console.log("publishing all groups");
       return UserGroups.find({});
     } else {
+      console.log("publishing one group");
       // owners can see their groups
       return UserGroups.find({owner: this.userId});
     }
