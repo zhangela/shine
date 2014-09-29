@@ -2,6 +2,9 @@ Template.allNonAdminUsers.events({
   "click .addStarBtn": function() {
     Meteor.call("addStarForUser", this._id);
   },
+  "click .removeStarBtn": function() {
+    Meteor.call("removeStarForUser", this._id);
+  },
   "click .delete": function (event) {
     event.preventDefault();
 
@@ -12,15 +15,14 @@ Template.allNonAdminUsers.events({
 });
 
 Template.allNonAdminUsers.helpers({
-  "assignments": function(usersToShow) {
-    var level = usersToShow.level;
+  "assignments": function(level) {
     return Assignments.find({assignmentLevel: level}, {sort: {weekNum: 1, assignmentType: 1}});
   },
   "displayedAssignmentName": function() {
     return "Week " + this.weekNum + " " + this.assignmentType.toProperCase();
   },
-  "userIsCorrectLevel": function(usersToShow) {
-    return this.level === usersToShow.level;
+  "userIsCorrectLevel": function(level) {
+    return this.level === level;
   },
   "userIDToUser": function(userID) {
     return Meteor.users.findOne(userID);
@@ -31,7 +33,6 @@ Template.allNonAdminUsers.helpers({
     }
   },
   "completed": function(assignmentId, user) {
-    var completedAssignmentNames = [];
     userCompletedAssignmentIds = _.map(user.completed, function(assignment) {
         return assignment._id;
     });
@@ -39,7 +40,7 @@ Template.allNonAdminUsers.helpers({
       var thisAssignment = _.find(user.completed, function(completedAssignment) {
         return completedAssignment._id === assignmentId;
       });
-      return 100 * thisAssignment.result.numCorrect / thisAssignment.result.numTotal;
+      return Math.round(100 * thisAssignment.result.numCorrect / thisAssignment.result.numTotal);
     } else {
       return "Not Completed";
     }

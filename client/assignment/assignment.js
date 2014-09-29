@@ -3,10 +3,8 @@ Template.assignment.rendered = function () {
   var template = this;
 
   Deps.autorun(function () {
-    if (Session.get("timer") <= 0) {
-      if (assignment.timerLength) {
-        $(template.find("button")).click();
-      }
+    if (assignment && Session.get("timer") <= 0 && assignment.timerLength) {
+      $(template.find("button")).click();
     }
   });
 };
@@ -75,8 +73,10 @@ Template.assignment.helpers({
       var testResult = _.find(Meteor.user().completed, function(assignment) {
         return assignment._id === self._id;
       });
+
+      score = testResult.result.numCorrect / testResult.result.numTotal * 100;
       
-      return testResult.result.numCorrect / testResult.result.numTotal * 100;
+      return Math.round(score);
     }
   },
   "timer": function () {

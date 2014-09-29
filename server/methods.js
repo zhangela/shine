@@ -177,22 +177,25 @@ Meteor.methods({
   },
 
   "updateCompletedAssignmentsForUser": function(assignmentID, userId) {
+    console.log("method called!");
     var self = this;
 
-    if (! userId) {
+    if (userId) {
       // admin can resubmit other people's stuff
       if (! Permissions.isAdmin(Meteor.user())) {
         throw new Meteor.Error(403, "Need to be admin.");
       }
-
+    } else {
       userId = self.userId;
     }
 
+    // Get the saved answers for this assignment
     var answerCursor = SavedAnswers.find({
       assignmentId: assignmentID,
       userId: userId
     });
 
+    // Get the correct answers for this assignment
     var correctAnswers = [];
     answerCursor.forEach(function(answer) {
       var questionObj = Questions.findOne(answer.questionID);
@@ -201,6 +204,7 @@ Meteor.methods({
       }
     });
 
+    // Get the assignment
     var assignment = Assignments.findOne(assignmentID);
     var assignmentResult = {
       assignmentID: assignmentID,
@@ -214,6 +218,7 @@ Meteor.methods({
       _id: userId,
       "completed._id": assignment._id
     })) {
+      console.log("this should print");
       Meteor.users.update(
         {_id: userId},
         {
@@ -224,10 +229,17 @@ Meteor.methods({
               assignmentType: assignment.assignmentType,
               result: assignmentResult
             }
+          },
+
+          // add 2 stars when you first complete the assignment
+          $inc: {
+            stars: 2
           }
         }
       );
     } else {
+      console.log("this should not print");
+
       // admin can resubmit other people's stuff
       if (! Permissions.isAdmin(Meteor.user())) {
         throw new Meteor.Error(403, "Need to be admin.");
@@ -249,8 +261,13 @@ Meteor.methods({
       );
     }
   },
+
   "addStarForUser": function(userId) {
     Meteor.users.update({_id: userId}, {$inc: {stars: 1}});
+  },
+
+  "removeStarForUser": function(userId) {
+    Meteor.users.update({_id: userId}, {$inc: {stars: -1}});
   },
 
   "addNewUser": function (user) {
@@ -263,7 +280,11 @@ Meteor.methods({
       userID = Accounts.createUser(user);
     }
 
-    Meteor.users.update({_id: userID}, {$set: {level: user.level}});
+    console.log("updating: ", userID);
+    Meteor.users.update({_id: userID}, {$set: {
+      level: user.level,
+      stars: 0
+    }});
 
     var currentUserGroupID = UserGroups.findOne({owner: Meteor.userId()})._id;
     UserGroups.update({_id: currentUserGroupID}, {$push: {users: userID}});

@@ -27,6 +27,16 @@ Template.editStudentAssignment.helpers({
   },
   "questionObj": function() {
     return Questions.findOne({_id: this.questionID});
+  },
+  "assignmentScoreForUser": function(user) {
+    var self = this;
+    console.log(self, user);
+
+    var testResult = _.find(user.completed, function(assignment) {
+      return assignment._id === self.assignment._id;
+    });
+    
+    return testResult.result.numCorrect / testResult.result.numTotal * 100;
   }
 });
 

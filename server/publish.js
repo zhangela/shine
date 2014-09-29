@@ -1,11 +1,20 @@
+var userFieldsToPublish = {
+  'completed': 1,
+  'emails': 1,
+  'level': 1,
+  'isAdmin': 1,
+  'isSuperAdmin': 1,
+  'stars': 1
+};
+
 Meteor.publish("userData", function () {
   return Meteor.users.find({_id: this.userId},
-    {fields: {'completed': 1, 'emails': 1, 'level': 1, 'isAdmin': 1, 'isSuperAdmin': 1}});
+    {fields: userFieldsToPublish});
 });
 
 Meteor.publish("allUsersData", function() {
   return Meteor.users.find({},
-    {fields: {'completed': 1, 'emails': 1, 'level': 1, 'isAdmin': 1, 'isSuperAdmin': 1}});
+    {fields: userFieldsToPublish});
 });
 
 Meteor.publish("assignments", function () {

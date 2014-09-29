@@ -1,6 +1,10 @@
 <template name="editStudentAssignment">
   <h3>Student: {{email student}} </h3>
   <h3>Assignment: {{assignmentDisplayName this.assignment}}</h3>
+  <h3>Score: {{assignmentScoreForUser student}}%</h3>
+  
+  <hr />
+
   <span class="hidden assignmentID">{{this.assignment._id}}</span>
 
   {{#each this.savedAnswers}}

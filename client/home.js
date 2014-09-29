@@ -1,5 +1,6 @@
 Template.home.helpers({
   "assignments": function() {
+    console.log(Meteor.userId());
     if (Meteor.userId()) {
       return Assignments.find({assignmentLevel: Meteor.user().level, isPublished: true}, {sort: {weekNum: 1, assignmentLevel: 1, assignmentType: 1}});
     }

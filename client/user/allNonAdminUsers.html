@@ -10,27 +10,31 @@
             <tr>
               <th>Email</th>
               <th>Level</th>
-              {{#each assignments this}}
+              {{#each assignments level}}
                 <th>{{displayedAssignmentName}}</th>
               {{/each}}
               <th>Stars</th>
-              <th></th>
+              <th>Add/Remove Stars</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
           {{#each this.users }} 
             {{#with userIDToUser this}}
-            {{#if userIsCorrectLevel ../..}} <!-- XXX: Hacky. needed bc usergroup does not have level. -->
+            {{#if userIsCorrectLevel ../../level}} <!-- XXX: Hacky. needed bc usergroup does not have level. -->
               <tr>
                 <td><a href="{{pathFor 'editUser'}}">{{email}}</a></td> 
                 <td>{{level}}</td>
-                {{#each assignments ../../..}}
+                {{#each assignments ../../level}}
                   <td>{{completed this._id ..}}</td>
                 {{/each}}
                 <td>{{stars}}</td>
-                <td><button class="addStarBtn btn btn-default btn-sm">
-                  Add Star</button></td>
+
+                <td>
+                  <button class="addStarBtn btn btn-default btn-sm">+</button>
+                  <button class="removeStarBtn btn btn-default btn-sm">-</button>
+                </td>
+
                 {{#unless this.isSuperAdmin}}
                   <td><a class="deleteBtn glyphicon glyphicon-remove text-danger delete" href="#"></a></td>
                 {{/unless}}

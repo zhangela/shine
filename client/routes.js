@@ -4,17 +4,29 @@ var triggerGoogleAnalytics = function () {
   }
 };
 
+Tracker.autorun(function () {
+  Meteor.userId();
+  Meteor.subscribe("assignments");
+  Meteor.subscribe("userGroups");
+  Meteor.subscribe("userData");
+  Meteor.subscribe("allUsersData");
+});
+
+// iron router sucks
+var oldGo = Router.go;
+Router.go = function () {
+  var oldLocation = window.location.pathname;
+  oldGo.apply(Router, arguments);
+
+  // iron router didn't work
+  if (window.location.pathname === oldLocation) {
+    window.location = arguments[0];
+  }
+};
+
 Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
-  waitOn: function () {
-    return [
-      Meteor.subscribe("assignments"),
-      Meteor.subscribe("userGroups"),
-      Meteor.subscribe("userData"),
-      Meteor.subscribe("allUsersData")
-    ];
-  },
   onBeforeAction: triggerGoogleAnalytics
 });
 
@@ -50,11 +62,25 @@ Router.map(function () {
     layoutTemplate: null
   });
 
+  var initTimer = function () {
+    Timer.resetTimer();
+
+    var data = this.data();
+
+    if (data && data.timerLength) {
+      var amplifyKey = Meteor.userId() + "/" +
+        data._id;
+      var totalTime = parseInt(data.timerLength, 10);
+
+      Timer.startTimer(amplifyKey, totalTime);
+    }
+  };
+
   this.route('assignment', {
     path: '/weeks/:weekNum/:assignmentType',
     template: 'assignment',
     data: function() {
-      if (Meteor.userId()) {
+      if (Meteor.user()) {
         return Assignments.findOne({
           weekNum: this.params.weekNum,
           assignmentType: this.params.assignmentType,
@@ -68,17 +94,8 @@ Router.map(function () {
         Meteor.subscribe("savedAnswers")
       ];
     },
-    onRun: function () {
-      Timer.resetTimer();
-
-      if (this.getData() && this.getData().timerLength) {
-        var amplifyKey = Meteor.userId() + "/" +
-          this.getData()._id;
-        var totalTime = parseInt(this.getData().timerLength, 10);
-
-        Timer.startTimer(amplifyKey, totalTime);
-      }
-    }
+    onRun: initTimer,
+    onRerun: initTimer
   });
 
   // ADMIN ACCESSABLE ROUTES ONLY
