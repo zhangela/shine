@@ -11,10 +11,13 @@
             <th>Type</th>
             <th>Level</th>
             <th>Due Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+
+            {{#if currentUser.isSuperAdmin}}
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            {{/if}}
           </tr>
         </thead>
         <tbody>
@@ -24,25 +27,27 @@
             <td>{{this.assignmentType}}</td>
             <td>{{this.assignmentLevel}}</td>
             <td>N/A</td>
-            <td>
-              <a href="{{pathFor 'editAssignment'}}">View/Edit</a>
-            </td>
-            
-            {{#if this.isPublished }}
-              <td>Published</td>
-              <td><button class="btnUnpublish btn btn-danger btn-sm">Un-Publish</button>
-            </td>
-            {{else}}
-              <td>Not Published</td>
+            {{#if currentUser.isSuperAdmin}}
               <td>
-                <button class="btnPublish btn btn-success btn-sm">Publish</button>
+                <a href="{{pathFor 'editAssignment'}}">View/Edit</a>
+              </td>
+            
+              {{#if this.isPublished }}
+                <td>Published</td>
+                <td><button class="btnUnpublish btn btn-danger btn-sm">Un-Publish</button>
+              </td>
+              {{else}}
+                <td>Not Published</td>
+                <td>
+                  <button class="btnPublish btn btn-success btn-sm">Publish</button>
+                </td>
+              {{/if}}
+            
+              <td>
+                <a class="glyphicon glyphicon-remove text-danger delete"
+                  href="#"></a>
               </td>
             {{/if}}
-            
-            <td>
-              <a class="glyphicon glyphicon-remove text-danger delete"
-                href="#"></a>
-            </td>
           </tr>
         {{/each}}
       </tbody>

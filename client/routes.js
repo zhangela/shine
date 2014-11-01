@@ -7,6 +7,9 @@ var triggerGoogleAnalytics = function () {
 Tracker.autorun(function () {
   Meteor.userId();
   Meteor.subscribe("userData");
+  Meteor.subscribe("assignments");
+  Meteor.subscribe("userGroups");
+  Meteor.subscribe("allUsersData");
 });
 
 // iron router sucks
@@ -24,14 +27,7 @@ Router.go = function () {
 Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
-  onBeforeAction: triggerGoogleAnalytics,
-  waitOn: function () {
-    return [
-      Meteor.subscribe("assignments"),
-      Meteor.subscribe("userGroups"),
-      Meteor.subscribe("allUsersData")
-    ];
-  }
+  onBeforeAction: triggerGoogleAnalytics
 });
 
 var checkForAdmin = function () {
@@ -48,8 +44,20 @@ var mustBeLoggedIn = function () {
   }
 };
 
+var checkForSuperAdmin = function () {
+  if ((!Meteor.user()) || (!Meteor.user().isSuperAdmin)) {
+    // stop the rest of the before hooks and the action function 
+    this.render("home");
+    this.stop();
+  }
+};
+
 Router.onBeforeAction(checkForAdmin, {
-  only: ["admin", "superadmin", "editAssignment"]
+  only: ["admin"]
+});
+
+Router.onBeforeAction(checkForSuperAdmin, {
+  only: ["superAdmin", "editAssignment"]
 });
 
 Router.onBeforeAction(mustBeLoggedIn);
@@ -171,12 +179,6 @@ Router.map(function () {
 
   this.route('superAdmin', {
     path: 'admin/super',
-    template: 'superAdmin',
-    onBeforeAction: function () {
-      if (!Meteor.user() || !Meteor.user().isSuperAdmin) {
-        // stop the rest of the before hooks and the action function 
-        this.stop();
-      }
-    },
+    template: 'superAdmin'
   });
 });

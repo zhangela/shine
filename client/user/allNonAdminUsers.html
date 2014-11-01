@@ -45,7 +45,7 @@
                   <button class="removeStarBtn btn btn-default btn-sm">-</button>
                 </td>
 
-                {{#if isSuperAdmin}}
+                {{#if currentUser.isSuperAdmin}}
                   <td><a class="deleteBtn glyphicon glyphicon-remove text-danger delete" href="#"></a></td>
                 {{/if}}
               </tr>

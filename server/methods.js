@@ -1,8 +1,8 @@
 Meteor.methods({
   // assignments
   saveAssignment: function (assignment) {
-    if (! Permissions.isAdmin(Meteor.user())) {
-      throw new Meteor.Error(403, "Need to be admin.");
+    if (! Meteor.user().isSuperAdmin) {
+      throw new Meteor.Error(403, "Need to be super admin.");
     }
     
     if (assignment._id) { // if we are editing

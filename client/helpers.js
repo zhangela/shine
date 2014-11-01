@@ -42,10 +42,6 @@ Handlebars.registerHelper("questionObjFromID", function(questionId) {
   return Questions.findOne({_id: questionId});
 });
 
-Handlebars.registerHelper("isSuperAdmin", function () {
-  return Meteor.user() && Meteor.user().emails[0].address === "shineboard@mit.edu";
-});
-
 $(function() {
   filepicker.setKey("Asmkb8jlTEaH7zJyX3BSez");
 
